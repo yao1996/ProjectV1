@@ -27,12 +27,12 @@ public class ManagerService {
         return managerDao.addBook(bookDetails) == 1;
     }
 
-    public boolean deleteBookByBookId(int bookId) {
-        return managerDao.deleteBookByBookId(bookId) == 1;
+    public boolean deleteBookByTypeId(int bookId) {
+        return managerDao.deleteBookByTypeId(bookId) == 1;
     }
 
-    public boolean updateBook(BookDetails bookDetails) {
-        return managerDao.updateBook(bookDetails) == 1;
+    public boolean updateBookDetail(BookDetails bookDetails) {
+        return managerDao.updateBookDetail(bookDetails) == 1;
     }
 
 }

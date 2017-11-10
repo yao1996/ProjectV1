@@ -24,7 +24,7 @@ public class DetailController {
     @RequestMapping("/detail/{bookId}")
     public String detail(@PathVariable("bookId") String bookId, Model model) {
         int i = Integer.parseInt(bookId);
-        BookDetails bookDetails = bookService.selectByBookId(i);
+        BookDetails bookDetails = bookService.selectByTypeId(i);
         model.addAttribute("book", bookDetails);
         return "readerTemplates/detail";
     }

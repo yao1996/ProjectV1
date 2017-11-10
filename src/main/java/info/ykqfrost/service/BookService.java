@@ -23,7 +23,7 @@ public class BookService {
         return bookDao.selectAllBooks();
     }
 
-    public BookDetails selectByBookId(int bookId) {
+    public BookDetails selectByTypeId(int bookId) {
         return bookDao.selectByTypeId(bookId);
     }
 

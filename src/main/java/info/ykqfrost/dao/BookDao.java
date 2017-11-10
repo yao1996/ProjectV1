@@ -41,5 +41,5 @@ public interface BookDao {
      * @param bookID 图书id
      * @return 更新的行数
      */
-    int deleteBookByBookId(int bookID);
+    int deleteBookByTypeId(int bookID);
 }

@@ -26,22 +26,6 @@
                 <input class="my_input1" type="password" name="password" id="password" onblur="checkpassword()" onfocus="demandpass()">
                 <span class="my_tip" id="passTip"></span>
               </div>
-              <div class="my_list"><span class="my_word">Age</span>
-                <input class="my_input1" type="text" name="age" id="age" onblur="checkage()" onfocus="demandage()">
-                <span class="my_tip" id="ageTip"></span>
-              </div>
-                <div class="my_list"><span class="my_word">Gender</span>
-                    <input class="my_input2" type="radio" name="gender" value="male">male
-                    <input class="my_input2" type="radio" name="gender" value="female">female
-                </div>
-                <div class="my_list"><span class="my_word">Phone</span>
-                    <input class="my_input1" type="text" name="phone" id="phone" onblur="checkphone()" onfocus="demandphone()">
-                    <span class="my_tip" id="phoneTip"></span>
-                </div>
-                <div class="my_list"><span class="my_word">email</span>
-                    <input class="my_input1" type="text" name="email" id="email" onblur="checkemail()" onfocus="demandemail()">
-                    <span class="my_tip" id="emailTip"></span>
-                </div>
                 <div class="my_list"><input id="my_button" type="submit" value="Sign up now"></div>
               <div th:if="${session.isRegistered == 'false'}" style="margin-left: 200px;">
                   <p class="my_list">failed</p>

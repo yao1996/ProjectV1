@@ -34,8 +34,6 @@ public class Test {
         Reader reader = new Reader();
         reader.setUsername("reader");
         reader.setPassword("555555");
-        reader.setGender(Gender.male);
-        reader.setAge(55);
         try {
             boolean b = userService.register(reader);
             System.out.println("注册： " + b);

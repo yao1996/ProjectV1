@@ -50,7 +50,7 @@ public class BookManageController {
     @GetMapping("/delete")
     public String deleteBook(@RequestParam String bookId,HttpSession session){
         if (session.getAttribute(isManager) != null && session.getAttribute(isManager).equals(true)) {
-            service.deleteBookByBookId(Integer.parseInt(bookId));
+            service.deleteBookByTypeId(Integer.parseInt(bookId));
             return "redirect:/manage";
         } else {
             return "redirect:/login";
@@ -61,7 +61,7 @@ public class BookManageController {
     public String modify(HttpSession session,Model model,@RequestParam String bookId){
         if (session.getAttribute(isManager) != null && session.getAttribute(isManager).equals(true)) {
             int bookID = Integer.parseInt(bookId);
-            BookDetails bookDetails = bookService.selectByBookId(bookID);
+            BookDetails bookDetails = bookService.selectByTypeId(bookID);
             model.addAttribute("book", bookDetails);
             return "managerTemplates/changeBooks";
         } else {
@@ -71,7 +71,7 @@ public class BookManageController {
 
     @PostMapping("/modify/commit")
     public String modifyCommit(@Valid BookDetails bookDetails, BindingResult bindingResult) {
-        service.updateBook(bookDetails);
+        service.updateBookDetail(bookDetails);
         return "redirect:/manage/modify?bookId="+ bookDetails.getTypeId();
     }
 

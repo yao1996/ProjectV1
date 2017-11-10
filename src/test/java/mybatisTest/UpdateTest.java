@@ -27,7 +27,7 @@ public class UpdateTest {
         bookDetails.setTypeId(1);
         bookDetails.setTotalNum(6);
         bookDetails.setRemainNum(6);
-        int i = managerDao.updateBook(bookDetails);
+        int i = managerDao.updateBookDetail(bookDetails);
         System.out.println(i);
     }
 }
