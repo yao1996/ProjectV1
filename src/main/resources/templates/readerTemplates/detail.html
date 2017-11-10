@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <title>Library</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" type="text/css" href="/static/css/detail.css" th:href="@{/css/detail.css}" />
+    <style>
+  body
+  {
+    margin: 0;
+    background-color: #fff;
+  }
+  </style>
+  </head>
+  <body>
+    <script type="text/javascript" src="/static/js/jquery.js" th:src="@{/js/jquery.js}"></script>
+    <script type="text/javascript" src="/static/js/script.js" th:src="@{/js/script.js}"></script>
+    <script type="text/javascript" src="/static/js/my.js" th:src="@{/js/my.js}"></script>
+    <div class="bu1 ttt"></div>
+<div class="bu2">
+    <div class="vv ttt">
+        <img class="aa" src="/static/images/000.jpg" th:src="@{/images/000.jpg}">
+    </div>
+    <div class="sk clearFix">
+        <input class="ss" placeholder="Search by title or author" autocomplete="off" name="sousuo" type="text" id="inner">
+        <input class="annui" value="search" type="button" id="myClick">
+    </div>
+    <div class="cc clearFix">
+        <div th:if="${session.reader==null}">
+            <a class="m" href="/templates/readerTemplates/login.html" th:href="@{/login}">Sign in</a>
+            <a class="dd" href="/templates/readerTemplates/register.html" th:href="@{/register}" >Sign up</a>
+        </div>
+        <div th:unless="${session.reader == null}">
+            <a class="m" th:text="${session.reader.readerId}+':'+ ${session.reader.username}">username</a>
+            <a class="dd" href="/templates/readerTemplates/index.html?type=exit" th:href="@{/(type='exit')}">Exit</a>
+        </div>
+    </div>
+</div>
+<div class="tiantou">
+    <div class="biankuang clearFix">
+        <div class="tongyong daohangyanse"><a th:href="@{/}">All works</a> </div>
+        <div class="tongyong daohangyanse">Classification</div>
+        <div class="tongyong daohangyanse">Ranking</div>
+        <div class="tongyong daohangyanse">Finished novel</div>
+        <div class="tongyong daohangyanse">Free novels</div>
+        <div class="tongyong daohangyanse">Author area</div>
+        <div class="tongyong daohangyanse">Reader Forum</div>
+    </div>
+</div>
+<div class="yincang" onmouseover="document.getElementById('oDiv').style.display='block'" onmouseout="document.getElementById('oDiv').style.display='none'" style="display:none" id="oDiv"></div>
+  <div id="bookDetails" class="clearFix">
+      <!--/*@thymesVar id="bookDetails" type="info.ykqfrost.beans.BookDetails"*/-->
+    <div id="name" th:text="${bookDetails.getBookName()}">bookName</div>
+    <div id="mybook" th:style="'background:url(/'+ ${bookDetails.getPicUrl()} +');background-size:cover;'" >
+    <div id="itfl">
+    <div id="info">
+        <p th:text="|author : ${bookDetails.getAuthor()}|">author of the bookDetails</p>
+      <p th:text="${bookDetails.getIntroduce()}">info</p>
+        <!--/*@thymesVar id="isRented" type="java.lang.Integer"*/-->
+        <!--/*@thymesVar id="borrower" type="java.lang.String"*/-->
+        <div>
+            <p th:text="|total amount : ${bookDetails.getTotalNum()}|">total amount of the bookDetails</p>
+            <p th:text="|remaining amount : ${bookDetails.getRemainNum()}|">remaining amount of the bookDetails</p>
+            <p th:text="|location : ${bookDetails.getLocation()}|">location of the bookDetails</p>
+        </div>
+    </div>
+    <!--<div th:if="${session.reader != null} " class="clearFix">-->
+        <!--<a th:href="@{/rent(bookId=${bookDetails.getTypeId()})}" class="hire" >Borrow</a>-->
+        <!--<a th:href="@{/return(bookId=${bookDetails.getTypeId()})}" class="return" >Return</a>-->
+    <!--</div>-->
+    </div>
+    </div>
+  </div>
+  <script>
+      window.onload = function () {
+      document.getElementById("myClick").onclick = function () {
+          var value = document.getElementById("inner").value;
+          window.location.href = "/?search=" + value;
+      };
+  }
+  </script>
+  </body>
+</html>

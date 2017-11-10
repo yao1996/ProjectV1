@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatisTest.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="info.ykqfrost.dao.BorrowReturnDao">
+
+    <parameterMap id="LogParamMap" type="LogBean">
+        <parameter property="borrowId" javaType="int" />
+        <parameter property="bookId" javaType="int" />
+        <parameter property="readerId" javaType="int" />
+        <parameter property="returnDate" javaType="Date" />
+        <parameter property="borrowDate" javaType="Date" />
+    </parameterMap>
+
+    <resultMap id="LogResultMap" type="LogBean">
+        <id property="borrowId" column="b_id" />
+        <result column="book_id" property="bookId" />
+        <result column="reader_id" property="readerId" />
+        <result column="borrow_date" property="borrowDate" />
+        <result column="return_date" property="returnDate" />
+    </resultMap>
+
+    <update id="borrowBook" parameterType="int" >
+        UPDATE bookdetails SET remainNum = bookdetails.remainNum-1
+        WHERE type_id = #{typeId}
+    </update>
+    
+    <update id="returnBook" parameterType="int">
+        UPDATE bookdetails SET remainNum = bookdetails.remainNum +1
+        WHERE type_id = #{typeId}
+    </update>
+    
+    <update id="returnLog" parameterMap="LogParamMap">
+        UPDATE borrowlog SET return_date = #{returnDate}
+        WHERE book_id = #{bookId} AND reader_id = #{readerId} AND b_id = #{borrowId}
+    </update>
+
+    <insert id="borrowLog" parameterMap="LogParamMap" >
+        INSERT INTO borrowlog (book_id, reader_id, borrow_date) VALUES
+            (#{bookId},#{readerId},#{borrowDate})
+    </insert>
+
+    <select id="selectUnReturned" resultMap="LogResultMap">
+        SELECT * FROM borrowlog
+        WHERE return_date IS NULL
+    </select>
+
+    <select id="selectAllLog" resultMap="LogResultMap">
+        SELECT *
+        FROM borrowlog
+    </select>
+
+    <select id="selectBorrowNum" resultType="Integer" parameterMap="LogParamMap">
+        SELECT b_id
+        FROM borrowlog
+        WHERE reader_id = #{readerId} AND book_id = #{bookId} AND return_date IS NULL
+    </select>
+
+    <select id="selectRemainNum" resultType="int" parameterType="int">
+        SELECT remainNum
+        FROM bookdetails
+        WHERE type_id = #{typeId}
+    </select>
+</mapper>

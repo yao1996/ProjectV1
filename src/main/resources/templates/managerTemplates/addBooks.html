@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <title>Like Book</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" type="text/css" href="/static/css/manageBook.css" th:href="@{/css/manageBook.css}" />
+    <link rel="stylesheet" type="text/css" href="/static/css/addBook.css" th:href="@{/css/addBook.css}" />
+  </head>
+  <body>
+    <div class="bu1 ttt"></div>
+    <div class="bu2">
+<div class="vv ttt">
+<img class="aa" src="/static/images/000.jpg" th:src="@{/images/000.jpg}">
+</div>
+
+<div class="sk clearFix">
+  <input class="ss" placeholder="Search the title or author" autocomplete="off" name="sousuo" type="text" id="inner">
+  <input class="annui" value="S" type="button" id="">
+</div>
+<div class="cc clearFix">
+</div>
+    </div>
+  <div class="tiantou">
+      <div class="biankuang clearFix">
+          <a href="manageBook.html" th:href="@{/manage}"><div class="tongyong daohangyanse" id="first">allBooks</div></a>
+          <a href="addBooks.html" th:href="@{/manage/addBook}"><div class="tongyong daohangyanse" id="second">addBooks</div></a>
+          <a href="borrowBooks.html" th:href="@{/manage/borrow}"><div class="tongyong daohangyanse" id="third">borrowBooks</div></a>
+          <a href="returnBooks.html" th:href="@{/manage/return}"><div class="tongyong daohangyanse" id="forth">returnBooks</div></a>
+          <a href="manageBook.html" th:href="@{/manage(type = 'exit')}"><div class="tongyong daohangyanse" id="fifth">exit</div></a>
+      </div>
+</div>
+<div class="yincang" onmouseover="document.getElementById('oDiv').style.display='block'" onmouseout="document.getElementById('oDiv').style.display='none'" style="display:none" id="oDiv"></div>
+
+  <div id="bookDetails" class="clearFix">
+    <div id="name">ADD BOOK</div>
+    <div id="itfl">
+    <div id="info">
+        <!--/*@thymesVar id="bookDetails" type="info.ykqfrost.beans.BookDetails"*/-->
+      <form th:action="@{/manage/addBook/commit}" enctype="multipart/form-data" method="post" th:object="${bookDetails}">
+          <div class="serachs2">
+          Book Name：&nbsp;&nbsp;<input type="text" name="bookName" class="inputs2"><br>
+          Introduction：&nbsp;<input type="text" name="introduction" class="inputs2"><br>
+          Author：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="author" class="inputs2"><br>
+          Location：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="location" class="inputs2"><br>
+          Total Amount:&nbsp;<input type="text" name="totalNum" class="inputs2"><br/>
+          Cover Image：<input type="file" class="inputs2" name="file" value="file">
+        </div>
+        <div class="return2"><input type="submit" value="ADD" class="finishReturn"></div>
+      </form>
+    </div>
+
+    </div>
+  </div>
+  </body>
+</html>

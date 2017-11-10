@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatisTest.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="info.ykqfrost.dao.ManagerDao">
+
+    <resultMap id="BookResultMap" type="BookDetails">
+        <id column="type_id" property="typeId" />
+        <result column="bookName" property="bookName" />
+        <result column="ISBN13" property="isbn13" javaType="Long" />
+        <result column="ISBN10" property="isbn10" javaType="Long" />
+        <result column="author" property="author" />
+        <result column="coverImage" property="coverImageUrl" />
+        <result column="introduce" property="introduce" />
+        <result column="totalNum" property="totalNum" />
+        <result column="location" property="location" />
+        <result column="remainNum" property="remainNum" />
+    </resultMap>
+
+    <resultMap id="UserResultMap" type="info.ykqfrost.beans.Reader">
+        <result column="lib_username" property="username" />
+        <result column="lib_password" property="password" />
+    </resultMap>
+
+    <select id="managerLogin" resultMap="UserResultMap" parameterType="LoginForm">
+        SELECT lib_username,lib_password
+        FROM librarian
+        WHERE lib_username = #{username} AND lib_password = #{password}
+    </select>
+
+    <select id="selectAllBooks" resultMap="BookResultMap" >
+        SELECT *
+        FROM bookdetails;
+    </select>
+    
+    <update id="updateBookDetail" parameterType="BookDetails">
+        UPDATE bookdetails
+        <trim prefix="SET" prefixOverrides=",">
+            <if test="bookName != null">
+                bookname = #{bookName}
+            </if>
+            <if test="author != null">
+                ,author = #{author}
+            </if>
+            <if test="introduce != null">
+                ,introduce = #{introduce}
+            </if>
+            <if test="location != null">
+                ,location = #{location}
+            </if>
+        </trim>
+        WHERE type_id = #{typeId}
+    </update>
+
+    <insert id="addBook" parameterType="BookDetails">
+        INSERT INTO bookdetails (bookname,ISBN13,ISBN10, author, coverImage, introduce, totalNum, remainNum, location)
+        VALUES (#{bookName},#{isbn13},#{isbn10},#{author},#{coverImageUrl},#{introduce},#{totalNum},#{totalNum},#{location})
+    </insert>
+
+    <delete id="deleteBookByTypeId" parameterType="int">
+        DELETE FROM bookDetails
+        WHERE type_id = #{typeId}
+    </delete>
+
+</mapper>

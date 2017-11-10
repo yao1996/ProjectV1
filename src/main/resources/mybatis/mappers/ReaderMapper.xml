@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatisTest.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="info.ykqfrost.dao.ReaderDao">
+    <resultMap id="ReaderResultMap" type="info.ykqfrost.beans.Reader">
+        <result column="r_username" property="username" />
+        <result column="r_password" property="password" />
+        <result column="r_account" property="account" />
+    </resultMap>
+
+    <select id="selectAll" resultMap="ReaderResultMap">
+        SELECT r_username,r_password,r_account
+        FROM reader
+    </select>
+
+    <select id="selectOneById" resultMap="ReaderResultMap" parameterType="int">
+        SELECT *
+        FROM reader
+        WHERE r_username = #{username}
+    </select>
+
+    <select id="login" parameterType="LoginForm" resultMap="ReaderResultMap">
+        SELECT r_username,r_account
+        FROM reader
+        WHERE r_username = #{username} AND r_password = #{password}
+    </select>
+
+    <insert id="createReader" parameterType="User">
+        INSERT INTO reader( r_username, r_password, r_account)
+        VALUES
+        (#{username},#{password},#{account})
+    </insert>
+</mapper>
