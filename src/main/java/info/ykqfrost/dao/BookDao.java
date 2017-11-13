@@ -23,6 +23,14 @@ public interface BookDao {
     BookDetails selectByTypeId(int bookId);
 
     /**
+     * 通过isbn查找书
+     * @param isbn 图书编号
+     * @return 书籍类型编号
+     */
+    int selectByIsbn(long isbn);
+
+
+    /**
      * 通过作者或书名搜索书
      * @param search 书名或作者名的一部分
      * @return 搜索到的书
@@ -35,6 +43,13 @@ public interface BookDao {
      * @return 更新的行数
      */
     int addBook(BookDetails bookDetails);
+
+    /**
+     * 添加新书，自动生成每本书id
+     * @param typeId 书籍类型编号
+     * @return 更新的行数
+     */
+    int addSpecificBook(int typeId);
 
     /**
      * 通过书的id删除书籍

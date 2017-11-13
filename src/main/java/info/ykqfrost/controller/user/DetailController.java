@@ -25,7 +25,7 @@ public class DetailController {
     public String detail(@PathVariable("bookId") String bookId, Model model) {
         int i = Integer.parseInt(bookId);
         BookDetails bookDetails = bookService.selectByTypeId(i);
-        model.addAttribute("book", bookDetails);
+        model.addAttribute("bookDetails", bookDetails);
         return "readerTemplates/detail";
     }
 }

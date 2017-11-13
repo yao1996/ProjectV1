@@ -31,8 +31,8 @@ public class RegisterController {
             session.removeAttribute("isRegistered");
         }
         remove = true;
-        model.addAttribute("user",new Reader());
-        return "readerTemplates/createReader";
+        model.addAttribute("reader",new Reader());
+        return "readerTemplates/register";
     }
 
     @PostMapping("/register/commit")
@@ -43,7 +43,7 @@ public class RegisterController {
         } catch (Exception e) {
             session.setAttribute("isRegistered","false");
             remove = false;
-            return "redirect:/createReader";
+            return "redirect:/register";
 
         }
     }

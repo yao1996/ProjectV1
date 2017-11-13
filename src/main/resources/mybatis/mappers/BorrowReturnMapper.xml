@@ -19,19 +19,24 @@
         <result column="return_date" property="returnDate" />
     </resultMap>
 
+    <select id="outPermission" parameterType="int" >
+        SELECT outPermission FROM bookdetails
+        WHERE type_id = (SELECT type_id FROM books WHERE bookId = #{bookId})
+    </select>
+
     <update id="borrowBook" parameterType="int" >
         UPDATE bookdetails SET remainNum = bookdetails.remainNum-1
-        WHERE type_id = #{typeId}
+        WHERE type_id = (SELECT type_id FROM books WHERE bookId = #{bookId})
     </update>
     
     <update id="returnBook" parameterType="int">
         UPDATE bookdetails SET remainNum = bookdetails.remainNum +1
-        WHERE type_id = #{typeId}
+        WHERE type_id = (SELECT type_id FROM books WHERE bookId = #{bookId})
     </update>
     
     <update id="returnLog" parameterMap="LogParamMap">
         UPDATE borrowlog SET return_date = #{returnDate}
-        WHERE book_id = #{bookId} AND reader_id = #{readerId} AND b_id = #{borrowId}
+        WHERE book_id = #{bookId}
     </update>
 
     <insert id="borrowLog" parameterMap="LogParamMap" >

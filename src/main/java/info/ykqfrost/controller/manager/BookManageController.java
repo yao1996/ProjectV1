@@ -1,8 +1,11 @@
 package info.ykqfrost.controller.manager;
 
+import com.dongxuexidu.douban4j.model.app.DoubanException;
+import info.ykqfrost.beans.AddBookForm;
 import info.ykqfrost.beans.BookDetails;
 import info.ykqfrost.service.BookService;
 import info.ykqfrost.service.ManagerService;
+import info.ykqfrost.utils.Douban;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
 
 /**
  * @author YaoKeQi
@@ -23,12 +27,12 @@ import javax.validation.Valid;
 @RequestMapping("/manage")
 public class BookManageController {
     private String isManager = "isManager";
-    private ManagerService service;
+    private ManagerService managerService;
     private final BookService bookService;
 
     @Autowired
-    public BookManageController(ManagerService service, BookService bookService) {
-        this.service = service;
+    public BookManageController(ManagerService managerService, BookService bookService) {
+        this.managerService = managerService;
         this.bookService = bookService;
     }
 
@@ -42,15 +46,21 @@ public class BookManageController {
         }
     }
     @PostMapping("/addBook/commit")
-    public String addBookCommit(@Valid BookDetails bookDetails, BindingResult bindingResult){
-        service.addBook(bookDetails);
+    public String addBookCommit(@Valid AddBookForm addBookForm, BindingResult bindingResult){
+        BookDetails bookDetails = null;
+        try {
+            bookDetails = Douban.getBookDetail(addBookForm);
+        } catch (IOException | DoubanException e) {
+            System.out.println("IO or Douban Exception");
+        }
+        managerService.addBook(bookDetails);
         return "redirect:/manage";
     }
 
     @GetMapping("/delete")
     public String deleteBook(@RequestParam String bookId,HttpSession session){
         if (session.getAttribute(isManager) != null && session.getAttribute(isManager).equals(true)) {
-            service.deleteBookByTypeId(Integer.parseInt(bookId));
+            managerService.deleteBookByTypeId(Integer.parseInt(bookId));
             return "redirect:/manage";
         } else {
             return "redirect:/login";
@@ -71,7 +81,7 @@ public class BookManageController {
 
     @PostMapping("/modify/commit")
     public String modifyCommit(@Valid BookDetails bookDetails, BindingResult bindingResult) {
-        service.updateBookDetail(bookDetails);
+        managerService.updateBookDetail(bookDetails);
         return "redirect:/manage/modify?bookId="+ bookDetails.getTypeId();
     }
 

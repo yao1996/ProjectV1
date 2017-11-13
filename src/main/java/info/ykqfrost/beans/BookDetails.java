@@ -15,6 +15,31 @@ public class BookDetails {
     private int totalNum;
     private int remainNum;
     private String location;
+    private boolean outPermission;
+
+    public boolean isOutPermission() {
+        return outPermission;
+    }
+
+    public void setOutPermission(boolean outPermission) {
+        this.outPermission = outPermission;
+    }
+
+    @Override
+    public String toString() {
+        return "BookDetails{" +
+                "typeId=" + typeId +
+                ", isbn10=" + isbn10 +
+                ", isbn13=" + isbn13 +
+                ", bookName='" + bookName + '\'' +
+                ", author='" + author + '\'' +
+                ", coverImageUrl='" + coverImageUrl + '\'' +
+                ", introduce='" + introduce + '\'' +
+                ", totalNum=" + totalNum +
+                ", remainNum=" + remainNum +
+                ", location='" + location + '\'' +
+                '}';
+    }
 
     public long getIsbn10() {
         return isbn10;

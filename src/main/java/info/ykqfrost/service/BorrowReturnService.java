@@ -1,6 +1,7 @@
 package info.ykqfrost.service;
 
 import info.ykqfrost.beans.LogBean;
+import info.ykqfrost.dao.BookDao;
 import info.ykqfrost.dao.BorrowReturnDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,9 +24,13 @@ public class BorrowReturnService {
 
     @Transactional(rollbackFor = Exception.class)
     public void borrowBook(LogBean logBean) throws Exception {
+        boolean outPermission = borrowReturnDao.outPermission(logBean.getBookId());
+        if (! outPermission) {
+            throw new Exception("this book is not allow to be borrowed out !");
+        }
         int remain = borrowReturnDao.selectRemainNum(logBean.getBookId());
         if (remain==0) {
-            throw new Exception();
+            throw new Exception("there is no more this book !");
         }
         ArrayList<Integer> list = borrowReturnDao.selectBorrowNum(logBean);
         if (list.size() == 1) {

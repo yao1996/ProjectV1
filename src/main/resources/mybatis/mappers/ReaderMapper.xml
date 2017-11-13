@@ -26,9 +26,9 @@
         WHERE r_username = #{username} AND r_password = #{password}
     </select>
 
-    <insert id="createReader" parameterType="User">
+    <insert id="createReader" parameterType="Reader">
         INSERT INTO reader( r_username, r_password, r_account)
         VALUES
-        (#{username},#{password},#{account})
+        (#{username},#{password},50)
     </insert>
 </mapper>

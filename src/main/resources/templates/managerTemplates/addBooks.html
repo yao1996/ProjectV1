@@ -37,15 +37,16 @@
     <div id="name">ADD BOOK</div>
     <div id="itfl">
     <div id="info">
-        <!--/*@thymesVar id="bookDetails" type="info.ykqfrost.beans.BookDetails"*/-->
-      <form th:action="@{/manage/addBook/commit}" enctype="multipart/form-data" method="post" th:object="${bookDetails}">
-          <div class="serachs2">
-          Book Name：&nbsp;&nbsp;<input type="text" name="bookName" class="inputs2"><br>
-          Introduction：&nbsp;<input type="text" name="introduction" class="inputs2"><br>
-          Author：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="author" class="inputs2"><br>
+      <!--/*@thymesVar id="addBookForm" type="info.ykqfrost.beans.AddBookForm"*/-->
+      <form th:action="@{/manage/addBook/commit}"  method="post" th:object="${addBookForm}">
+         <div class="serachs2">
+          ISBN：&nbsp;&nbsp;<input type="text" name="isbn" class="inputs2"><br>
           Location：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="location" class="inputs2"><br>
           Total Amount:&nbsp;<input type="text" name="totalNum" class="inputs2"><br/>
-          Cover Image：<input type="file" class="inputs2" name="file" value="file">
+             <div class="my_list"><span class="my_word">Out Permission:</span>
+                 <input type="radio" name="outPermission" value="true" class="my_input2" checked>true
+                 <input type="radio" name="outPermission" value="false" class="my_input2">false
+             </div>
         </div>
         <div class="return2"><input type="submit" value="ADD" class="finishReturn"></div>
       </form>

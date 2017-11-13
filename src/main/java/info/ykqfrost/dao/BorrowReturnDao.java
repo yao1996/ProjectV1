@@ -59,6 +59,13 @@ public interface BorrowReturnDao {
     ArrayList<Integer> selectBorrowNum(LogBean logBean);
 
     /**
+     * 通过typeId查看书籍能否外借
+     * @param bookId 图书类型编号
+     * @return 能否外借
+     */
+    boolean outPermission(int bookId);
+
+    /**
      * 查找书的剩余数量
      * @param bookId bookId
      * @return 剩余数量

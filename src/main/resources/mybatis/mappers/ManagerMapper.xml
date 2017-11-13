@@ -14,15 +14,15 @@
         <result column="totalNum" property="totalNum" />
         <result column="location" property="location" />
         <result column="remainNum" property="remainNum" />
+        <result column="outPermission" property="outPermission" />
     </resultMap>
 
     <resultMap id="UserResultMap" type="info.ykqfrost.beans.Reader">
         <result column="lib_username" property="username" />
-        <result column="lib_password" property="password" />
     </resultMap>
 
     <select id="managerLogin" resultMap="UserResultMap" parameterType="LoginForm">
-        SELECT lib_username,lib_password
+        SELECT lib_username
         FROM librarian
         WHERE lib_username = #{username} AND lib_password = #{password}
     </select>
@@ -50,15 +50,5 @@
         </trim>
         WHERE type_id = #{typeId}
     </update>
-
-    <insert id="addBook" parameterType="BookDetails">
-        INSERT INTO bookdetails (bookname,ISBN13,ISBN10, author, coverImage, introduce, totalNum, remainNum, location)
-        VALUES (#{bookName},#{isbn13},#{isbn10},#{author},#{coverImageUrl},#{introduce},#{totalNum},#{totalNum},#{location})
-    </insert>
-
-    <delete id="deleteBookByTypeId" parameterType="int">
-        DELETE FROM bookDetails
-        WHERE type_id = #{typeId}
-    </delete>
 
 </mapper>

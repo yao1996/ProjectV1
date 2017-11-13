@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.ListIterator;
 
 /**
  * @author YaoKeQi
@@ -18,7 +19,7 @@ public class doubanTest {
     @Test
     public void bookIsbnTest() throws IOException, DoubanException {
         DoubanBookMovieMusicService service = new DoubanBookMovieMusicService();
-        DoubanSubjectObj book = service.getBookInfoByISBN("7505715666");
+        DoubanSubjectObj book = service.getBookInfoByISBN("9787505715660");
         List<DoubanAttributeObj> list = book.getAttributes();
         for(DoubanAttributeObj attribute : list) {
             System.out.println(attribute.getName() + "  " + attribute.getValue());
@@ -27,6 +28,7 @@ public class doubanTest {
         for (DoubanLinkObj obj : linkObjs) {
             System.out.println(obj.getObjName() + " " + obj.getRel() +" "+obj.getHref());
         }
-
+        System.out.println(book.getSummary());
+        System.out.println(book.getLinkByRel("image"));
     }
 }

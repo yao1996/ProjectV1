@@ -27,7 +27,8 @@ public class LoginController {
     }
 
     @GetMapping("/login")
-    public String login(Model model) {
+    public String login(Model model,HttpSession session) {
+        session.removeAttribute("user");
         model.addAttribute("form",new LoginForm());
         return "readerTemplates/login";
     }

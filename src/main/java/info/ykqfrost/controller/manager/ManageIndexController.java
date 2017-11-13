@@ -31,8 +31,8 @@ public class ManageIndexController {
         }
         String isManager = "isManager";
         if (session.getAttribute(isManager) != null && session.getAttribute(isManager).equals(true)) {
-            ArrayList<BookDetails> bookDetails = service.selectAllBooks();
-            model.addAttribute("books", bookDetails);
+            ArrayList<BookDetails> bookDetailses = service.selectAllBooks();
+            model.addAttribute("bookDetailses", bookDetailses);
             return "managerTemplates/manageBook";
         } else {
             return "redirect:/login";

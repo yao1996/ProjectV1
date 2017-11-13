@@ -14,7 +14,7 @@ public interface ManagerDao {
     /**
      * 管理员登录
      * @param form loginForm
-     * @return Reader containing userID and username
+     * @return username of manager
      */
     Reader managerLogin (LoginForm form);
 
@@ -25,19 +25,6 @@ public interface ManagerDao {
      */
     int updateBookDetail(BookDetails bookDetails);
 
-    /**
-     * 添加书
-     * @param bookDetails 书籍信息
-     * @return 影响行数
-     */
-    int addBook(BookDetails bookDetails);
-
-    /**
-     * 通过书籍编号删除书籍
-     * @param bookId 书籍编号
-     * @return 影响行数
-     */
-    int deleteBookByTypeId(int bookId);
 
     /**
      * 取出所有书

@@ -49,17 +49,18 @@
             <td width="10%">Location</td>
             <td width="25%">operations</td>
         </tr>
-          <!--/*@thymesVar id="bookDetails" type="java.util.ArrayList<info.ykqfrost.beans.BookDetails>"*/-->
-        <tr th:each="bookDetails : ${bookDetails}">
-            <td width="10%" th:text="${bookDetails.getBookId()}">Number</td>
+        <!--/*@thymesVar id="bookDetailses" type="java.util.ArrayList<info.ykqfrost.beans.BookDetails>"*/-->
+          <!--/*@thymesVar id="bookDetails" type="info.ykqfrost.beans.BookDetails"*/-->
+        <tr th:each="bookDetails : ${bookDetailses}">
+            <td width="10%" th:text="${bookDetails.getTypeId()}">Number</td>
             <td width="15%" th:text="${bookDetails.getBookName()}">Name</td>
             <td width="10%" th:text="${bookDetails.getAuthor()}">Author</td>
             <td width="10%" th:text="${bookDetails.getTotalNum()}">Total Amount</td>
             <td width="10%" th:text="${bookDetails.getRemainNum()}">Remaining</td>
             <td width="10%" th:text="${bookDetails.getLocation()}">Location</td>
             <td width="25%">
-              <a href="changeBooks.html" th:href="@{/manage/modify(typeId=${bookDetails.getBookId()})}" ><input type="button" value="modify" class="change"></a>
-              <a href="#" th:href="@{/manage/delete(typeId = ${bookDetails.getBookId()})}"><input type="button" value="delete" class="change"></a>
+              <a href="changeBooks.html" th:href="@{/manage/modify(typeId=${bookDetails.getTypeId()})}" ><input type="button" value="modify" class="change"></a>
+              <a href="#" th:href="@{/manage/delete(typeId = ${bookDetails.getTypeId()})}"><input type="button" value="delete" class="change"></a>
             </td>
         </tr>
       </table>

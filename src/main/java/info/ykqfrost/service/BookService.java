@@ -23,8 +23,12 @@ public class BookService {
         return bookDao.selectAllBooks();
     }
 
-    public BookDetails selectByTypeId(int bookId) {
-        return bookDao.selectByTypeId(bookId);
+    public BookDetails selectByTypeId(int typeId) {
+        return bookDao.selectByTypeId(typeId);
+    }
+
+    public int selectByIsbn(long isbn) {
+        return bookDao.selectByIsbn(isbn);
     }
 
     public ArrayList<BookDetails> searchForBook(String search){

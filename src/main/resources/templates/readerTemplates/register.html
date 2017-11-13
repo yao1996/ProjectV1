@@ -27,7 +27,7 @@
                 <span class="my_tip" id="passTip"></span>
               </div>
                 <div class="my_list"><input id="my_button" type="submit" value="Sign up now"></div>
-              <div th:if="${session.isRegistered == 'false'}" style="margin-left: 200px;">
+              <div th:if="${session.isRegistered=='false'}" style="margin-left: 200px;">
                   <p class="my_list">failed</p>
               </div>
          </form>

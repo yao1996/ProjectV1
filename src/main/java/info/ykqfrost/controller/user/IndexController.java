@@ -32,13 +32,13 @@ public class IndexController {
         if (type !=null && type.equals(exit)){
             session.removeAttribute("user");
         }
-        ArrayList<BookDetails> bookDetails;
+        ArrayList<BookDetails> bookDetailses;
         if (search == null) {
-            bookDetails = bookService.selectAllBooks();
+            bookDetailses = bookService.selectAllBooks();
         }else {
-            bookDetails = bookService.searchForBook(search);
+            bookDetailses = bookService.searchForBook(search);
         }
-        model.addAttribute("books", bookDetails);
+        model.addAttribute("bookDetailses", bookDetailses);
         return "readerTemplates/index";
     }
 

@@ -48,6 +48,7 @@ public class BorrowReturnController {
     @PostMapping("/borrow/commit")
     public String borrowCommit(@Valid LogBean logBean,BindingResult bindingResult,HttpSession session){
         logBean.setBorrowDate(new Date());
+
         try {
             borrowReturnService.borrowBook(logBean);
         } catch (Exception e) {

@@ -24,12 +24,12 @@
           <input class="annui" value="search" type="button" id="myClick">
         </div>
         <div class="cc clearFix">
-            <div th:if="${session.reader==null}">
+            <div th:if="${session.user==null}">
                 <a class="m" href="/templates/readerTemplates/login.html" th:href="@{/login}">Sign in</a>
                 <a class="dd" href="/templates/readerTemplates/register.html" th:href="@{/register}" >Sign up</a>
             </div>
-            <div th:unless="${session.reader==null}">
-                <a class="m" th:text="${session.reader.readerId}+':'+${session.reader.getUsername()}">username</a>
+            <div th:unless="${session.user==null}">
+                <a class="m" th:text="${session.user.getUsername()}">username</a>
                 <a class="dd" href="/templates/readerTemplates/index.html?type=exit" th:href="@{/(type='exit')}">Exit</a>
             </div>
         </div>
@@ -59,12 +59,13 @@
   	</div>
   </div>
 </div>
-    <!--/*@thymesVar id="bookDetails" type="java.util.ArrayList<info.ykqfrost.beans.BookDetails>"*/-->
-<div th:unless="${#lists.isEmpty(bookDetails)}">
+    <!--/*@thymesVar id="bookDetailses" type="java.util.ArrayList<info.ykqfrost.beans.BookDetails>"*/-->
+<div th:unless="${#lists.isEmpty(bookDetailses)}">
     <div class="paiban">
         <div class="clearFix">
-            <div class="qq" th:onclick="'javasript:my('+${bookDetails.getBookId()}+')'" th:each="bookDetails : ${bookDetails}">
-                <div class="animated_div" th:style="'background:url('+ ${bookDetails.getPicUrl()} +');background-size:cover;'" ></div>
+            <!--/*@thymesVar id="bookDetails" type="info.ykqfrost.beans.BookDetails"*/-->
+            <div class="qq" th:onclick="'javasript:my('+${bookDetails.getTypeId()}+')'" th:each="bookDetails : ${bookDetailses}">
+                <div class="animated_div" th:style="'background:url('+ ${bookDetails.getCoverImageUrl()} +');background-size:cover;'" ></div>
                 <div class="w" th:text="${bookDetails.getBookName()}">bookName</div>
                 <div class="e" th:text="${bookDetails.getAuthor()}">author</div>
             </div>
