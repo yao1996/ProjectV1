@@ -27,7 +27,7 @@ public interface BookDao {
      * @param isbn 图书编号
      * @return 书籍类型编号
      */
-    int selectByIsbn(long isbn);
+    Integer selectByIsbn(long isbn);
 
 
     /**
@@ -57,4 +57,11 @@ public interface BookDao {
      * @return 更新的行数
      */
     int deleteBookByTypeId(int bookID);
+
+    /**
+     * 添加书籍时如果图书已存在几本，则在totalNum和remainNum上增加数量
+     * @param bookDetails book
+     * @return 更新的行数
+     */
+    int addExisted(BookDetails bookDetails);
 }

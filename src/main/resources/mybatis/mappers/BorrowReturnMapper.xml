@@ -30,7 +30,7 @@
     </update>
     
     <update id="returnBook" parameterType="int">
-        UPDATE bookdetails SET remainNum = bookdetails.remainNum +1
+        UPDATE bookdetails SET remainNum = remainNum +1
         WHERE type_id = (SELECT type_id FROM books WHERE bookId = #{bookId})
     </update>
     
@@ -40,7 +40,7 @@
     </update>
 
     <insert id="borrowLog" parameterMap="LogParamMap" >
-        INSERT INTO borrowlog (book_id, reader_id, borrow_date) VALUES
+        INSERT INTO borrowlog (book_id, reader_username, borrow_date) VALUES
             (#{bookId},#{readerId},#{borrowDate})
     </insert>
 
@@ -54,10 +54,10 @@
         FROM borrowlog
     </select>
 
-    <select id="selectBorrowNum" resultType="Integer" parameterMap="LogParamMap">
-        SELECT b_id
+    <select id="selectBorrowNum" resultType="Integer" parameterType="String">
+        SELECT count(b_id)
         FROM borrowlog
-        WHERE reader_id = #{readerId} AND book_id = #{bookId} AND return_date IS NULL
+        WHERE reader_username = #{readerUsername}  AND return_date IS NULL
     </select>
 
     <select id="selectRemainNum" resultType="int" parameterType="int">

@@ -38,7 +38,7 @@
     <div id="itfl">
     <div id="info">
       <!--/*@thymesVar id="addBookForm" type="info.ykqfrost.beans.AddBookForm"*/-->
-      <form th:action="@{/manage/addBook/commit}"  method="post" th:object="${addBookForm}">
+      <form th:action="@{/manage/addBook}"  method="post" th:object="${addBookForm}">
          <div class="serachs2">
           ISBN：&nbsp;&nbsp;<input type="text" name="isbn" class="inputs2"><br>
           Location：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="location" class="inputs2"><br>
@@ -49,6 +49,9 @@
              </div>
         </div>
         <div class="return2"><input type="submit" value="ADD" class="finishReturn"></div>
+          <div th:if="${session.addBookException != null}" th:text="${session.addBookException}">
+              exception
+          </div>
       </form>
     </div>
 

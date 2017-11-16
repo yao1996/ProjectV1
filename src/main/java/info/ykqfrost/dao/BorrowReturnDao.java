@@ -52,11 +52,11 @@ public interface BorrowReturnDao {
     ArrayList<LogBean> selectAllLog();
 
     /**
-     * 查找对同一本书，用户是否未还，若是，不允许借阅
-     * @param logBean logBean
+     * 查找用户未还书籍本书，最多同时借阅2本
+     * @param readerUsername String
      * @return br_id 的列表
      */
-    ArrayList<Integer> selectBorrowNum(LogBean logBean);
+    int selectBorrowNum(String readerUsername);
 
     /**
      * 通过typeId查看书籍能否外借

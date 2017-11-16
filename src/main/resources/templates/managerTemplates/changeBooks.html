@@ -34,7 +34,7 @@
     <div id="itfl">
     <div id="info">
         <!--/*@thymesVar id="bookDetails" type="info.ykqfrost.beans.BookDetails"*/-->
-    <form th:action="@{/manage/modify/commit}" enctype="multipart/form-data" method="post" th:object="${bookDetails}">
+    <form th:action="@{/manage/modify/}" enctype="multipart/form-data" method="post" th:object="${bookDetails}">
           <div class="serachs2">
           Book ID:<input type="text" name="typeId" readonly class="inputs2" th:value="${bookDetails.getTypeId()}"><br>
           Book Name：&nbsp;&nbsp;<input type="text" name="bookName" class="inputs2" th:value="${bookDetails.getBookName()}" ><br>

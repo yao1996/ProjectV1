@@ -28,11 +28,32 @@ public class BookService {
     }
 
     public int selectByIsbn(long isbn) {
-        return bookDao.selectByIsbn(isbn);
+        Integer i = bookDao.selectByIsbn(isbn);
+        if (i ==null) {
+            return 0;
+        }else {
+            return i;
+        }
+    }
+
+    int addSpecificBook(int typeId) {
+        return bookDao.addSpecificBook(typeId);
+    }
+
+    int addBook(BookDetails bookDetails) {
+        return bookDao.addBook(bookDetails);
+    }
+
+    int deleteBookByTypeId(int typeId) {
+        return bookDao.deleteBookByTypeId(typeId);
     }
 
     public ArrayList<BookDetails> searchForBook(String search){
         return bookDao.searchForBook(search);
+    }
+
+    int addExisted(BookDetails bookDetails) {
+        return bookDao.addExisted(bookDetails);
     }
 
 }

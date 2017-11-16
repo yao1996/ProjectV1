@@ -16,6 +16,7 @@ import java.util.ArrayList;
 @Service
 public class BorrowReturnService {
     private final BorrowReturnDao borrowReturnDao;
+    private final static int MAXOUTBORROWNUM = 2;
 
     @Autowired
     public BorrowReturnService(BorrowReturnDao borrowReturnDao) {
@@ -32,25 +33,23 @@ public class BorrowReturnService {
         if (remain==0) {
             throw new Exception("there is no more this book !");
         }
-        ArrayList<Integer> list = borrowReturnDao.selectBorrowNum(logBean);
-        if (list.size() == 1) {
-            throw new Exception();
+        int num = borrowReturnDao.selectBorrowNum(logBean.getReaderUsername());
+        if (num >= MAXOUTBORROWNUM) {
+            throw new Exception("the reader has borrowed 2 books !");
         }
         boolean b1 = borrowReturnDao.borrowBook(logBean.getBookId()) == 1;
         boolean b2 = borrowReturnDao.borrowLog(logBean) == 1;
         if (!b1 || !b2){
-            throw new Exception();
+            throw new Exception("some error happened in database,please call the producer !");
         }
     }
 
     @Transactional(rollbackFor = Exception.class)
     public void returnBook(LogBean logBean) throws Exception {
-        ArrayList<Integer> list = borrowReturnDao.selectBorrowNum(logBean);
-        logBean.setBorrowId(list.get(0));
         boolean b1 = borrowReturnDao.returnBook(logBean.getBookId()) == 1;
         boolean b2 = borrowReturnDao.returnLog(logBean) == 1;
         if (!b1 || !b2){
-            throw new Exception();
+            throw new Exception("return book failed ！");
         }
     }
 }

@@ -16,7 +16,13 @@ import java.util.ArrayList;
 @Service
 public class ManagerService {
     private ManagerDao managerDao;
+    private BookService bookService;
     private BookDao bookDao;
+    @Autowired
+    public void setBookService(BookService bookService) {
+        this.bookService = bookService;
+    }
+
     @Autowired
     public void setBookDao(BookDao bookDao) {
         this.bookDao = bookDao;
@@ -31,16 +37,24 @@ public class ManagerService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void addBook(BookDetails bookDetails) {
-        int i = bookDao.selectByIsbn(bookDetails.getIsbn10());
-        int j = bookDao.selectByIsbn(bookDetails.getIsbn13());
-        if (i ==0 && j ==0) {
-            bookDao.addBook(bookDetails);
+    public String addBook(BookDetails bookDetails) {
+        int i = bookService.selectByIsbn(bookDetails.getIsbn10());
+        int j = bookService.selectByIsbn(bookDetails.getIsbn13());
+        boolean k = i==0 && j==0;
+        if (k) {
+            bookService.addBook(bookDetails);
+        }else {
+            bookService.addExisted(bookDetails);
         }
         int num = bookDetails.getTotalNum();
         while (num != 0) {
-            bookDao.addSpecificBook(bookDetails.getTypeId());
+            bookService.addSpecificBook(bookDetails.getTypeId());
             num --;
+        }
+        if (k) {
+            return null;
+        }else{
+            return bookService.selectByTypeId(bookDetails.getTypeId()).getLocation();
         }
     }
 

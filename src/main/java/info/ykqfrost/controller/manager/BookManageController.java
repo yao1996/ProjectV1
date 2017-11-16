@@ -36,27 +36,6 @@ public class BookManageController {
         this.bookService = bookService;
     }
 
-    @GetMapping("/addBook")
-    public String addBook(HttpSession session, Model model) {
-        if (session.getAttribute(isManager) != null && session.getAttribute(isManager).equals(true)) {
-            model.addAttribute("book", new BookDetails());
-            return "managerTemplates/addBooks";
-        } else {
-            return "redirect:/login";
-        }
-    }
-    @PostMapping("/addBook/commit")
-    public String addBookCommit(@Valid AddBookForm addBookForm, BindingResult bindingResult){
-        BookDetails bookDetails = null;
-        try {
-            bookDetails = Douban.getBookDetail(addBookForm);
-        } catch (IOException | DoubanException e) {
-            System.out.println("IO or Douban Exception");
-        }
-        managerService.addBook(bookDetails);
-        return "redirect:/manage";
-    }
-
     @GetMapping("/delete")
     public String deleteBook(@RequestParam String bookId,HttpSession session){
         if (session.getAttribute(isManager) != null && session.getAttribute(isManager).equals(true)) {
@@ -79,7 +58,7 @@ public class BookManageController {
         }
     }
 
-    @PostMapping("/modify/commit")
+    @PostMapping("/modify")
     public String modifyCommit(@Valid BookDetails bookDetails, BindingResult bindingResult) {
         managerService.updateBookDetail(bookDetails);
         return "redirect:/manage/modify?bookId="+ bookDetails.getTypeId();

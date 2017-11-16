@@ -73,10 +73,11 @@ public class BorrowReturnController {
         }
     }
 
-    @PostMapping("/return/commit")
+    @PostMapping("/return")
     public String returnBookCommit(@Valid LogBean logBean, BindingResult bindingResult,HttpSession session) {
         logBean.setReturnDate(new Date());
         try {
+            System.out.println("return book," + logBean.getBookId());
             borrowReturnService.returnBook(logBean);
         } catch (Exception e) {
             session.setAttribute("isReturned","false");

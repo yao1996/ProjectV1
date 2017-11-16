@@ -12,7 +12,7 @@ public class LogBean {
      */
     private int borrowId;
     private int bookId;
-    private int readerId;
+    private String readerUsername;
     private Date borrowDate;
     private Date returnDate;
 
@@ -32,12 +32,12 @@ public class LogBean {
         this.bookId = bookId;
     }
 
-    public int getReaderId() {
-        return readerId;
+    public String getReaderUsername() {
+        return readerUsername;
     }
 
-    public void setReaderId(int readerId) {
-        this.readerId = readerId;
+    public void setReaderUsername(String readerUsername) {
+        this.readerUsername = readerUsername;
     }
 
     public Date getBorrowDate() {

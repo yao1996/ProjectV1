@@ -40,9 +40,8 @@
       <!--/*@thymesVar id="logBean" type="info.ykqfrost.beans.LogBean"*/-->
 
         <div class="serachs">
-          <form th:action="@{/manage/return/commit}" th:object="${logBean}" method="post">
-          Book Number:&nbsp;<input type="text" name="typeId" class="inputs"><br>
-          Reader ID :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="readerId" class="inputs">
+          <form th:action="@{/manage/return}" th:object="${logBean}" method="post">
+          BookId:&nbsp;<input type="text" name="BookId" class="inputs"><br>
             <!--/*@thymesVar id="isReturned" type="java.lang.String"*/-->
             <div th:if="${session.isReturned}=='false'" class="inputs" style="margin-left: 450px" >
               return failed

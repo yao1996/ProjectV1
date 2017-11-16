@@ -14,6 +14,7 @@
         <result column="totalNum" property="totalNum" />
         <result column="location" property="location" />
         <result column="remainNum" property="remainNum" />
+        <result column="outPermission" property="outPermission" />
     </resultMap>
 
     <select id="selectAllBooks" resultMap="BookResultMap" >
@@ -21,7 +22,7 @@
         FROM bookdetails
     </select>
 
-    <select id="selectByIsbn" resultType="int" parameterType="Long" >
+    <select id="selectByIsbn" resultType="Integer" parameterType="Long" >
         SELECT type_id
         FROM bookdetails
         WHERE ISBN10 = #{isbn} OR ISBN13 = #{isbn}
@@ -40,10 +41,15 @@
               OR ISBN10 = #{search} OR ISBN13 = #{search}
     </select>
 
-    <insert id="addBook" parameterType="BookDetails">
+    <insert id="addBook" parameterType="BookDetails" useGeneratedKeys="true" keyProperty="typeId">
         INSERT INTO bookdetails (ISBN10,ISBN13,bookName, author, coverImage, introduce, totalNum, remainNum, location,outPermission)
-        VALUES (#{isbn10},#{isbn13},#{bookName},#{author},#{coverImageUrl},#{introduce},#{totalNum},#{totalNum},#{outPermission})
+        VALUES (#{isbn10},#{isbn13},#{bookName},#{author},#{coverImageUrl},#{introduce},#{totalNum},#{totalNum},#{location},#{outPermission})
     </insert>
+    
+    <update id="addExisted" parameterType="BookDetails" useGeneratedKeys="true" keyProperty="typeId">
+        UPDATE bookdetails SET totalNum= totalNum+#{totalNum}, remainNum = remainNum + #{totalNum}
+        WHERE ISBN13 = #{Isbn13} OR ISBN10 = #{Isbn10}
+    </update>
 
     <insert id="addSpecificBook" parameterType="int">
         INSERT INTO books(type_id, isBorrowed)
