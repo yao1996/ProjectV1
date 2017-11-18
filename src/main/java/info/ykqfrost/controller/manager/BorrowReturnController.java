@@ -36,7 +36,7 @@ public class BorrowReturnController {
             session.removeAttribute("isBorrowed");
         }
         borrowFlag = true;
-        String isManager = "isManager";
+        String isManager = "IS_MANAGER";
         if (session.getAttribute(isManager) != null && session.getAttribute(isManager).equals(true)) {
             model.addAttribute("logBean",new LogBean());
             return "managerTemplates/borrowBooks";
@@ -45,7 +45,7 @@ public class BorrowReturnController {
         }
     }
 
-    @PostMapping("/borrow/commit")
+    @PostMapping("/borrow")
     public String borrowCommit(@Valid LogBean logBean,BindingResult bindingResult,HttpSession session){
         logBean.setBorrowDate(new Date());
 
@@ -64,7 +64,7 @@ public class BorrowReturnController {
             session.removeAttribute("isReturned");
         }
         returnFlag = true;
-        String isManager = "isManager";
+        String isManager = "IS_MANAGER";
         if (session.getAttribute(isManager) != null && session.getAttribute(isManager).equals(true)) {
             model.addAttribute("logBean",new LogBean());
             return "managerTemplates/returnBooks";

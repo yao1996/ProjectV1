@@ -1,11 +1,8 @@
 package info.ykqfrost.controller.manager;
 
-import com.dongxuexidu.douban4j.model.app.DoubanException;
-import info.ykqfrost.beans.AddBookForm;
 import info.ykqfrost.beans.BookDetails;
 import info.ykqfrost.service.BookService;
 import info.ykqfrost.service.ManagerService;
-import info.ykqfrost.utils.Douban;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.io.IOException;
 
 /**
  * @author YaoKeQi
@@ -26,7 +22,7 @@ import java.io.IOException;
 @Controller
 @RequestMapping("/manage")
 public class BookManageController {
-    private String isManager = "isManager";
+    public static final String IS_MANAGER = "IS_MANAGER";
     private ManagerService managerService;
     private final BookService bookService;
 
@@ -36,22 +32,13 @@ public class BookManageController {
         this.bookService = bookService;
     }
 
-    @GetMapping("/delete")
-    public String deleteBook(@RequestParam String bookId,HttpSession session){
-        if (session.getAttribute(isManager) != null && session.getAttribute(isManager).equals(true)) {
-            managerService.deleteBookByTypeId(Integer.parseInt(bookId));
-            return "redirect:/manage";
-        } else {
-            return "redirect:/login";
-        }
-    }
 
     @GetMapping("/modify")
-    public String modify(HttpSession session,Model model,@RequestParam String bookId){
-        if (session.getAttribute(isManager) != null && session.getAttribute(isManager).equals(true)) {
-            int bookID = Integer.parseInt(bookId);
-            BookDetails bookDetails = bookService.selectByTypeId(bookID);
-            model.addAttribute("book", bookDetails);
+    public String modify(HttpSession session,Model model,@RequestParam String typeId){
+        if (session.getAttribute(IS_MANAGER) != null && session.getAttribute(IS_MANAGER).equals(true)) {
+            int id = Integer.parseInt(typeId);
+            BookDetails bookDetails = bookService.selectByTypeId(id);
+            model.addAttribute("bookDetails", bookDetails);
             return "managerTemplates/changeBooks";
         } else {
             return "redirect:/login";

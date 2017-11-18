@@ -27,9 +27,9 @@ public class ManageIndexController {
     public String index(HttpSession session, Model model, @RequestParam(required = false) String type) {
         String exit = "exit";
         if (type != null && type.equals(exit)){
-            session.removeAttribute("isManager");
+            session.removeAttribute("IS_MANAGER");
         }
-        String isManager = "isManager";
+        String isManager = "IS_MANAGER";
         if (session.getAttribute(isManager) != null && session.getAttribute(isManager).equals(true)) {
             ArrayList<BookDetails> bookDetailses = service.selectAllBooks();
             model.addAttribute("bookDetailses", bookDetailses);

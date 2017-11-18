@@ -26,7 +26,6 @@
         <div class="cc clearFix">
             <div th:if="${session.user==null}">
                 <a class="m" href="/templates/readerTemplates/login.html" th:href="@{/login}">Sign in</a>
-                <a class="dd" href="/templates/readerTemplates/register.html" th:href="@{/register}" >Sign up</a>
             </div>
             <div th:unless="${session.user==null}">
                 <a class="m" th:text="${session.user.getUsername()}">username</a>

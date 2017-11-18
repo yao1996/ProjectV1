@@ -6,12 +6,12 @@
   border-width: 1px;
   border-style: solid;
   border-radius: 15px;
-  height: 520px;
-    padding-bottom: 50px;
+  height: 820px;
+  margin-bottom:20px;
 /*  background-color: red;*/
 }
 #name{
-    letter-spacing: 5px;
+    letter-spacing: 25px;
     margin-top: 25px;
     height: 50px;
     width: 1200px;
@@ -41,6 +41,7 @@
 #itfl{
    float: left;
    width: 600px;
+   height: 180px;
    margin-left: 360px;
 }
 #info{
@@ -49,16 +50,16 @@
 #button{
   margin-top: 80px;
 }
-.hire{
+#hire{
   text-decoration:none;
     cursor: pointer;
   font-size: 18px;
   float: left;
-  width:140px;
-  height:60px;
+  width:135px;
+  height:55px;
   color: #ffffff;
   background-color:#bf2c24;
-  margin-left: 120px;
+  margin-left: 60px;
   border-radius: 8px;
   text-align: center;
   line-height:38px;
@@ -66,18 +67,34 @@
   border-width: 1px;
   border-color: #bf2c24;
 }
-.return{
+#return{
   text-decoration:none;
     cursor: pointer;
   font-size: 18px;
   float: left;
   width:140px;
   height:60px;
-  margin-left: 100px;
+  margin-left: 55px;
   border-radius: 8px;
   text-align: center;
   line-height:38px;
   border-style: solid;
   border-width: 1px;
   border-color: #ccc;
+}
+#manage{
+  text-decoration:none;
+  cursor: pointer;
+  font-size: 18px;
+  float: left;
+  width:150px;
+  height:55px;
+  margin-left: 60px;
+  border-radius: 8px;
+  text-align: center;
+  line-height:38px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #ccc;
+   background-color:gray;
 }

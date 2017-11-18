@@ -33,12 +33,4 @@ public class Reader {
         return password;
     }
 
-
-    @Override
-    public String toString() {
-        return "Reader{" +
-                "  username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
 }

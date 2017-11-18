@@ -16,13 +16,19 @@
         <result column="remainNum" property="remainNum" />
         <result column="outPermission" property="outPermission" />
     </resultMap>
+    
+    <resultMap id="BooksMap" type="Book">
+        <id column="bookId" property="bookId" />
+        <result column="type_id" property="typeId" />
+        <result column="isBorrowed" property="isBorrowed" />
+    </resultMap>
 
     <select id="selectAllBooks" resultMap="BookResultMap" >
         SELECT *
         FROM bookdetails
     </select>
 
-    <select id="selectByIsbn" resultType="Integer" parameterType="Long" >
+    <select id="selectTypeIdByIsbn" resultType="Integer" parameterType="Long" >
         SELECT type_id
         FROM bookdetails
         WHERE ISBN10 = #{isbn} OR ISBN13 = #{isbn}
@@ -32,6 +38,24 @@
         SELECT *
         FROM bookdetails
         WHERE type_id = #{typeId}
+    </select>
+
+    <select id="selectByIsbn13" resultMap="BookResultMap" parameterType="long">
+        SELECT *
+        FROM bookdetails
+        WHERE ISBN13 = #{isbn13}
+    </select>
+    
+    <select id="selectBookIdByTypeId" resultType="Integer" parameterType="int">
+        SELECT bookId
+        FROM books
+        WHERE type_id = #{typeId}
+    </select>
+    
+    <select id="selectBookByBookId" parameterType="int" resultMap="BooksMap">
+        SELECT *
+        FROM books
+        WHERE bookId = #{bookId}
     </select>
 
     <select id="searchForBook" resultMap="BookResultMap" parameterType="String">
@@ -51,14 +75,39 @@
         WHERE ISBN13 = #{Isbn13} OR ISBN10 = #{Isbn10}
     </update>
 
-    <insert id="addSpecificBook" parameterType="int">
+    <insert id="addSpecificBook" parameterType="int" useGeneratedKeys="true" keyProperty="bookId">
         INSERT INTO books(type_id, isBorrowed)
         VALUES (#{typeId},FALSE )
     </insert>
     
-    <delete id="deleteBookByTypeId" parameterType="int">
+    <delete id="deleteBookByIsbn13" parameterType="long">
         DELETE FROM bookdetails
+        WHERE ISBN13 = #{isbn13}
+    </delete>
+    
+    <delete id="deleteBooksByBookId" parameterType="int">
+        DELETE FROM books
+        WHERE bookId = #{bookId}
+    </delete>
+    
+    <delete id="deleteBooksByTypeId" parameterType="int">
+        DELETE FROM books
         WHERE type_id = #{typeId}
     </delete>
+    
+    <update id="deleteOneBookOutsideByBookId" parameterType="int">
+        UPDATE bookdetails SET totalNum = totalNum -1
+        WHERE type_id = (SELECT type_id FROM books WHERE bookId = #{bookId})
+    </update>
+
+    <update id="deleteOneBookInsideByBookId" parameterType="int">
+        UPDATE bookdetails SET totalNum = totalNum -1,remainNum = remainNum -1
+        WHERE type_id = (SELECT type_id FROM books WHERE bookId = #{bookId})
+    </update>
+
+    <insert id="deleteRecord" parameterType="DeleteForm">
+        INSERT INTO deleterecord (bookId, isbn13, reason,bookName)
+                VALUES (#{bookId},#{isbn13},#{reason},#{bookName})
+    </insert>
 
 </mapper>

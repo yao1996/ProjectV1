@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * @author YaoKeQi
@@ -27,7 +28,7 @@ import java.io.IOException;
 public class AddBook {
     private BookService bookService;
     private ManagerService managerService;
-    private static final String ISMANAGER = "isManager";
+    private static final String ISMANAGER = "IS_MANAGER";
     private boolean addBookException;
 
     @Autowired
@@ -56,7 +57,7 @@ public class AddBook {
 
     @PostMapping("/addBook")
     public String addBookCommit(@Valid AddBookForm addBookForm, BindingResult bindingResult
-                                 , HttpSession session){
+                                 , HttpSession session,Model model){
         BookDetails bookDetails;
         try {
             bookDetails = Douban.getBookDetail(addBookForm);
@@ -65,8 +66,8 @@ public class AddBook {
             addBookException = true;
             return "redirect:/manage/addBook";
         }
-        managerService.addBook(bookDetails);
-        return "redirect:/manage/addBook";
+        ArrayList<Object> list = managerService.addBook(bookDetails);
+        model.addAttribute("list",list);
+        return "managerTemplates/barcode";
     }
-
 }

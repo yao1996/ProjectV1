@@ -34,16 +34,14 @@
     <div id="itfl">
     <div id="info">
         <!--/*@thymesVar id="bookDetails" type="info.ykqfrost.beans.BookDetails"*/-->
-    <form th:action="@{/manage/modify/}" enctype="multipart/form-data" method="post" th:object="${bookDetails}">
+    <form th:action="@{/manage/modify/}" method="post" th:object="${bookDetails}">
           <div class="serachs2">
-          Book ID:<input type="text" name="typeId" readonly class="inputs2" th:value="${bookDetails.getTypeId()}"><br>
-          Book Name：&nbsp;&nbsp;<input type="text" name="bookName" class="inputs2" th:value="${bookDetails.getBookName()}" ><br>
+          Type ID:<input type="text" name="typeId" readonly class="inputs2" th:value="${bookDetails.getTypeId()}"><br>
+          Book Name：&nbsp;&nbsp;<input type="text" name="bookName" readonly class="inputs2" th:value="${bookDetails.getBookName()}" ><br>
           Introduction：&nbsp;<input type="text" name="introduce" class="inputs2" th:value="${bookDetails.getIntroduce()}"><br>
-          Author：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="author" class="inputs2" th:value="${bookDetails.getAuthor()}"><br>
           Location：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="location" class="inputs2" th:value="${bookDetails.getLocation()}"><br>
           Total Amount:&nbsp;<input type="text" name="totalNum" class="inputs2" th:value="${bookDetails.getTotalNum()}"><br/>
           Remaining Amount:<input type="text" name="remainNum" class="inputs2" th:value="${bookDetails.getRemainNum()}"><br/>
-          Cover Image：<input type="file" name="file" class="inputs2" value="file">
           <div class="return2"><input type="submit" value="Modify" class="finishReturn"></div>
           </div>
     </form>

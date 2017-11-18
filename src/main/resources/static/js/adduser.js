@@ -12,7 +12,7 @@ function checkname() {
 }
 
 function checkpassword(){
-  var userpassword=document.getElementById('password').value;
+  var userpassword=document.getElementById('userpassword').value;
   var passTip=document.getElementById('passTip');
   var reg=/^[a-zA-Z0-9]{6,12}$/;
   if (reg.test(userpassword)) {
@@ -25,7 +25,7 @@ function checkpassword(){
 }
 
 function checkage() {
-  var userage=document.getElementById('age').value;
+  var userage=document.getElementById('userage').value;
   var ageTip=document.getElementById('ageTip');
   var reg=/^[0-9][1-9]{0,2}$/;
   if (reg.test(userage)) {
@@ -38,7 +38,7 @@ function checkage() {
 }
 
 function checkphone() {
-  var userphone=document.getElementById('phone').value;
+  var userphone=document.getElementById('userphone').value;
   var phoneTip=document.getElementById('phoneTip');
   var reg=/^[1][0-9]{10}$/;
   if (reg.test(userphone)) {
@@ -51,7 +51,7 @@ function checkphone() {
 }
 
 function checkemail() {
-  var useremail=document.getElementById('email').value;
+  var useremail=document.getElementById('useremail').value;
   var emailTip=document.getElementById('emailTip');
   var reg=/^[a-zA-Z0-9_]+@[a-zA-Z0-9]+(\.[a-zA-Z]+)+$/;
   if (reg.test(useremail)) {
@@ -64,7 +64,11 @@ function checkemail() {
 }
 
 function checkAll(){
-  return !!(checkname() && checkpassword());
+  if (checkname() && checkpassword()) {
+    return true;
+  } else{
+    return false;
+  }
 }
 
 function demandname(){
@@ -74,7 +78,7 @@ function demandname(){
 
 function demandpass(){
   var passTip=document.getElementById('passTip');
-  passTip.innerHTML="6-12 characters";
+  passTip.innerHTML="6-12 acharacters";
 }
 
 function demandage(){

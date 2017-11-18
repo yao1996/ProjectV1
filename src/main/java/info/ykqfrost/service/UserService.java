@@ -16,8 +16,6 @@ import java.util.ArrayList;
  */
 @Service
 public class UserService {
-    private final String admin = "admin";
-    private final String reader = "reader";
     private ReaderDao readerDao;
     private ManagerDao managerDao;
     @Autowired
@@ -47,6 +45,8 @@ public class UserService {
     }
 
     public Reader login (LoginForm form) {
+        String admin = "admin";
+        String reader = "reader";
         if (reader.equals(form.getAuthority())) {
             return readerDao.login(form);
         }else if (admin.equals(form.getAuthority())) {

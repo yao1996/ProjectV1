@@ -20,6 +20,7 @@ import javax.validation.Valid;
 @Controller
 public class LoginController {
     private UserService userService;
+    private boolean userFlag = false;
 
     @Autowired
     public void setUserService(UserService userService) {
@@ -28,22 +29,26 @@ public class LoginController {
 
     @GetMapping("/login")
     public String login(Model model,HttpSession session) {
-        session.removeAttribute("user");
+        if (!userFlag) {
+            session.removeAttribute("user");
+        }
+        userFlag = false;
         model.addAttribute("form",new LoginForm());
         return "readerTemplates/login";
     }
 
-    @PostMapping("/login/commit")
+    @PostMapping("/login")
     public String loginCommit(@Valid LoginForm form, BindingResult bindingResult, HttpSession session) {
         Reader reader = userService.login(form);
         if (reader == null) {
             session.setAttribute("user","false");
+            userFlag = true;
             return "redirect:/login";
         }else {
             session.setAttribute("user", reader);
             String admin = "admin";
             if (admin.equals(form.getAuthority())){
-                session.setAttribute("isManager",true);
+                session.setAttribute("IS_MANAGER",true);
                 return "redirect:/manage";
             }
             return "redirect:/";

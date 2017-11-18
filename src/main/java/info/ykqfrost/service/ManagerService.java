@@ -1,5 +1,6 @@
 package info.ykqfrost.service;
 
+import info.ykqfrost.beans.Book;
 import info.ykqfrost.beans.BookDetails;
 import info.ykqfrost.dao.BookDao;
 import info.ykqfrost.dao.ManagerDao;
@@ -37,29 +38,27 @@ public class ManagerService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public String addBook(BookDetails bookDetails) {
-        int i = bookService.selectByIsbn(bookDetails.getIsbn10());
-        int j = bookService.selectByIsbn(bookDetails.getIsbn13());
+    public ArrayList<Object> addBook(BookDetails bookDetails) {
+        ArrayList<Object> list = new ArrayList<>();
+        int i = bookService.selectTypeIdByIsbn(bookDetails.getIsbn10());
+        int j = bookService.selectTypeIdByIsbn(bookDetails.getIsbn13());
         boolean k = i==0 && j==0;
         if (k) {
             bookService.addBook(bookDetails);
+            list.add(bookDetails.getLocation());
         }else {
             bookService.addExisted(bookDetails);
+            list.add(bookService.selectByIsbn13(bookDetails.getIsbn13()).getLocation());
         }
         int num = bookDetails.getTotalNum();
+        Book book = new Book();
+        book.setTypeId(bookDetails.getTypeId());
         while (num != 0) {
             bookService.addSpecificBook(bookDetails.getTypeId());
+            list.add(book.getBookId());
             num --;
         }
-        if (k) {
-            return null;
-        }else{
-            return bookService.selectByTypeId(bookDetails.getTypeId()).getLocation();
-        }
-    }
-
-    public boolean deleteBookByTypeId(int bookId) {
-        return bookDao.deleteBookByTypeId(bookId) == 1;
+        return list;
     }
 
     public boolean updateBookDetail(BookDetails bookDetails) {

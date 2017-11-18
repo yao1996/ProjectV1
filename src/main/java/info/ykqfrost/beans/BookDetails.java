@@ -25,22 +25,6 @@ public class BookDetails {
         this.outPermission = outPermission;
     }
 
-    @Override
-    public String toString() {
-        return "BookDetails{" +
-                "typeId=" + typeId +
-                ", isbn10=" + isbn10 +
-                ", isbn13=" + isbn13 +
-                ", bookName='" + bookName + '\'' +
-                ", author='" + author + '\'' +
-                ", coverImageUrl='" + coverImageUrl + '\'' +
-                ", introduce='" + introduce + '\'' +
-                ", totalNum=" + totalNum +
-                ", remainNum=" + remainNum +
-                ", location='" + location + '\'' +
-                '}';
-    }
-
     public long getIsbn10() {
         return isbn10;
     }
