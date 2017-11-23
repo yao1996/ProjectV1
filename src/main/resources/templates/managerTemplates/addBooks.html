@@ -1,64 +1,137 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-  <head>
+<head>
     <meta charset="utf-8">
     <title>Like Book</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/style.css" th:href="@{/css/style.css}" />
-    <link rel="stylesheet" type="text/css" href="/static/css/manageBook.css" th:href="@{/css/manageBook.css}" />
-    <link rel="stylesheet" type="text/css" href="/static/css/addBook.css" th:href="@{/css/addBook.css}" />
-      <script type="text/javascript" src="../js/forward.js"></script>
-  </head>
-  <body>
-    <div class="bu1 ttt"></div>
-    <div class="bu2">
-<div class="vv ttt">
-<img class="aa" src="/static/images/000.jpg" th:src="@{/images/000.jpg}">
-</div>
-
-<div class="sk clearFix">
-  <input class="ss" placeholder="Search the title or author" autocomplete="off" name="sousuo" type="text" id="inner">
-  <input class="annui" value="S" type="button" id="">
-</div>
-<div class="cc clearFix">
-</div>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/manageBook.css" th:href="@{/css/manageBook.css}"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/addBook.css" th:href="@{/css/addBook.css}"/>
+    <link rel="stylesheet" type="text/css" href="/static/font-awesome/css/font-awesome.min.css"
+          th:href="@{/font-awesome/css/font-awesome.min.css}"/>
+    <script type="text/javascript" src="/static/js/forward.js" th:src="@{/js/forward.js}"></script>
+    <script type="text/javascript" src="/static/js/mmy.js" th:src="@{/js/mmy.js}"></script>
+</head>
+<body>
+<div class="bu1 ttt"></div>
+<div class="bu2">
+    <div class="vv ttt">
+        <img class="aa" src="/static/images/000.jpg" th:src="@{/images/000.jpg}">
     </div>
-  <div class="tiantou">
-      <div class="biankuang clearFix">
-      <a href="manageBook.html" th:href="@{/manage}"><div class="tongyong daohangyanse" id="first">allBooks</div></a>
-      <a href="addBooks.html" th:href="@{/manage/addBook}"><div class="tongyong daohangyanse" id="second">addBooks</div></a>
-      <a href="borrowBooks.html" th:href="@{/manage/borrow}"><div class="tongyong daohangyanse" id="third">borrowBooks</div></a>
-      <a href="returnBooks.html" th:href="@{/manage/return}"><div class="tongyong daohangyanse" id="forth">returnBooks</div></a>
-      <a href="deleteBooks.html" th:href="@{/manage/delete}"><div class="tongyong daohangyanse" id="forth">deleteBooks</div></a>
-      <a href="../readerTemplates/login.html" th:href="@{/login}"><div class="tongyong daohangyanse" id="fifth">logout</div></a>
-      <a href="addUser.html"><div class="tongyong daohangyanse" id="fifth">addUser</div></a>
-      </div>
-</div>
-<div class="yincang" onmouseover="document.getElementById('oDiv').style.display='block'" onmouseout="document.getElementById('oDiv').style.display='none'" style="display:none" id="oDiv"></div>
 
-  <div id="bookDetails" class="clearFix">
+    <div class="sk clearFix">
+        <input class="ss" placeholder="Search the title or author" autocomplete="off" name="sousuo" type="text"
+               id="inner">
+        <div class="annui" id="manageClick">
+            <i class="fa fa-search" aria-hidden="true" id="search_id"></i>
+        </div>
+    </div>
+    <div class="cc clearFix">
+        <a href="/templates/readerTemplates/login.html" th:href="@{/login}"><div class="myyanse" id="fifth">exit</div></a>
+    </div>
+</div>
+<div class="tiantou">
+    <div class="biankuang clearFix">
+        <a href="manageBook.html" th:href="@{/manage}">
+            <div class="tongyong daohangyanse" id="first">allBooks</div>
+        </a>
+        <a href="addBooks.html" th:href="@{/manage/addBook}">
+            <div class="tongyong daohangyanse" id="second">addBooks</div>
+        </a>
+        <a href="borrowBooks.html" th:href="@{/manage/borrow}">
+            <div class="tongyong daohangyanse" id="third">borrowBooks</div>
+        </a>
+        <a href="returnBooks.html" th:href="@{/manage/return}">
+            <div class="tongyong daohangyanse" id="forth">returnBooks</div>
+        </a>
+        <a href="deleteBooks.html" th:href="@{/manage/delete}">
+            <div class="tongyong daohangyanse" id="forth">deleteBooks</div>
+        </a>
+        <a href="userManager.html" th:href="@{/manage/user}">
+            <div class="tongyong daohangyanse" id="fifth">userManage</div>
+        </a>
+    </div>
+</div>
+<div class="yincang" onmouseover="document.getElementById('oDiv').style.display='block'"
+     onmouseout="document.getElementById('oDiv').style.display='none'" style="display:none" id="oDiv"></div>
+
+<div id="bookDetails" class="clearFix">
     <div id="name">ADD BOOK</div>
     <div id="itfl">
-    <div id="info">
-      <!--/*@thymesVar id="addBookForm" type="info.ykqfrost.beans.AddBookForm"*/-->
-      <form th:action="@{/manage/addBook}"  method="post" th:object="${addBookForm}">
-         <div class="serachs2">
-          ISBN：&nbsp;&nbsp;<input type="text" name="isbn" class="inputs2"><br>
-          Location：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="location" class="inputs2"><br>
-          Total Amount:&nbsp;<input type="text" name="totalNum" class="inputs2"><br/>
-             <div class="my_list"><span class="my_word">Out Permission:</span>
-                 <input type="radio" name="outPermission" value="true" class="my_input2" checked>true
-                 <input type="radio" name="outPermission" value="false" class="my_input2">false
-             </div>
+        <div id="info">
+            <!--/*@thymesVar id="addBookForm" type="info.ykqfrost.beans.AddBookForm"*/-->
+            <form th:action="@{/manage/addBook}" method="post" th:object="${addBookForm}" onsubmit="return checkAll()">
+                <div class="serachs3">
+                    ISBN：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="isbn" class="inputs2" id="country"><br/>
+                    BookName：&nbsp;&nbsp;&nbsp;<input type="text" name="bookname" class="inputs2" readonly id="bookname"><br/>
+                    Author：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" readonly name="auther" class="inputs2" id="auther"><br/>
+                    Publisher：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="publisher" readonly class="inputs2" id="publisher"><br/>
+                    Location：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="location"
+                                                                              class="inputs2"><br/>
+                </div>
+                <div class="serachs4">
+                    Total Amount:&nbsp;<input type="text" class="inputs2" name="totalNum" onfocus="demandpass()" onblur="checkpassword()" id="userpassword"> <span  id="passTip"></span><br/>
+                    Price:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="price" class="inputs2" onfocus="demandname()" onblur="checkname()" id="username"><span  id="nameTip"></span><br/>
+                    <div class="my_list"><span class="my_word">Out Permission:</span>
+                        <input type="radio" name="outPermission" value="true" class="my_input2" checked>true
+                        <input type="radio" name="outPermission" value="false" class="my_input2">false
+                    </div>
+                </div>
+                <div class="return2" th:if="${session.bookAddMessage != null}" th:text="| failed,${session.bookAddMessage} or isbn error |">
+                    exception
+                </div>
+                <div class="return2" style="margin-bottom: 50px"><input type="submit" value="ADD" class="finishReturn" id="forward"></div>
+            </form>
         </div>
-        <div class="return2"><input type="submit" value="ADD" class="finishReturn" id="forward"></div>
-          <div th:if="${session.addBookException != null}" th:text="${session.addBookException}">
-              exception
-          </div>
-      </form>
     </div>
+</div>
+<script>
+    document.getElementById("manageClick").onclick = function () {
+        var value = document.getElementById("inner").value;
+        if (value === "" || value === " ") {
+            alert("can not be null!");
+        } else {
+            window.location.href = "/manage/?search=" + value;
+        }
+    };
+    function createAjax(){
+        var ajax;
+        if(window.XMLHttpRequest){//ie7+、other browser
+            ajax = new XMLHttpRequest();
+        } else {//ie7-
+            ajax = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        return ajax;
+    }
 
-    </div>
-  </div>
-  </body>
+    window.onload=function () {
+        document.getElementById("country").onblur = function (){
+            var isbn = document.getElementById("country").value;
+            if (isbn!=""){
+                var ajax = createAjax();
+                ajax.onreadystatechange = function (){
+                    if(ajax.readyState == 4 && ajax.status == 200){
+                        document.getElementById('bookname').value="";
+                        document.getElementById('auther').value="";
+                        document.getElementById('publisher').value="";
+                        var jso = eval("(" + ajax.responseText  +")");
+                        document.getElementById('bookname').value=jso.bookName;
+                        document.getElementById('auther').value=jso.author;
+                        document.getElementById('publisher').value=jso.publisher;
+                    }
+                }
+                ajax.open("get", "/manage/ajax?isbn="+isbn, true);
+                ajax.send(null);
+
+            } else {
+                document.getElementById('bookname').value="";
+                document.getElementById('auther').value="";
+                document.getElementById('publisher').value="";
+                alert("ISBN can not be null!");
+            }
+        }
+
+    }
+</script>
+</body>
 </html>

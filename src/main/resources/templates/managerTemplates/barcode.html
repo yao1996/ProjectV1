@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>barcode</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/barcode.css" th:href="@{/css/barcode.css}"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/login.css" th:href="@{/css/login.css}">
+</head>
+<body id="backbody">
+<div id="back_total">
+    <div id="header">
+        <div id="mylogo_left"><img src="/static/images/logo.png" th:src="@{/images/logo.png}" width="80px" height="80px"></div>
+        <div id="mylogo_right"><a th:href="@{/manage/addBook}">Index</a></div>
+    </div>
+    <div th:if="${session.location != null}" th:text="${session.location}" id="meihua">
+        location
+    </div>
+    <!--/*@thymesVar id="list" type="java.util.ArrayList<java.lang.Object>"*/-->
+    <div th:unless="${#lists.isEmpty(list)}">
+        <div class="clearFix">
+            <div class="dange" th:each="i:${list}">
+                <img src="https://barcode.tec-it.com/barcode.ashx?translate-esc=off&data=001&code=Code39FullASCII&authentication=None&ssid=%E7%BD%91%E7%BB%9C%E5%90%8D%E7%A7%B0&password=&unit=Fit&dpi=96&imagetype=Gif&rotation=0&color=%23000000&bgcolor=%23ffffff&qunit=Mm&quiet=0"
+                     th:src="'https://barcode.tec-it.com/barcode.ashx?translate-esc=off&data='+${i}+'&code=Code39FullASCII&authentication=None&ssid=%E7%BD%91%E7%BB%9C%E5%90%8D%E7%A7%B0&password=&unit=Fit&dpi=96&imagetype=Gif&rotation=0&color=%23000000&bgcolor=%23ffffff&qunit=Mm&quiet=0'"
+                     alt='Barcode Generator TEC-IT'/>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

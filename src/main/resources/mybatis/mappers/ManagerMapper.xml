@@ -4,21 +4,23 @@
 <mapper namespace="info.ykqfrost.dao.ManagerDao">
 
     <resultMap id="BookResultMap" type="BookDetails">
-        <id column="type_id" property="typeId" />
-        <result column="bookName" property="bookName" />
-        <result column="ISBN13" property="isbn13" javaType="Long" />
-        <result column="ISBN10" property="isbn10" javaType="Long" />
-        <result column="author" property="author" />
-        <result column="coverImage" property="coverImageUrl" />
-        <result column="introduce" property="introduce" />
-        <result column="totalNum" property="totalNum" />
-        <result column="location" property="location" />
-        <result column="remainNum" property="remainNum" />
-        <result column="outPermission" property="outPermission" />
+        <id column="type_id" property="typeId"/>
+        <result column="bookName" property="bookName"/>
+        <result column="ISBN13" property="isbn13" javaType="Long"/>
+        <result column="ISBN10" property="isbn10" javaType="Long"/>
+        <result column="author" property="author"/>
+        <result column="coverImage" property="coverImageUrl"/>
+        <result column="introduce" property="introduce"/>
+        <result column="totalNum" property="totalNum"/>
+        <result column="location" property="location"/>
+        <result column="remainNum" property="remainNum"/>
+        <result column="outPermission" property="outPermission"/>
+        <result column="price" property="price"/>
+        <result column="publisher" property="publisher"/>
     </resultMap>
 
     <resultMap id="UserResultMap" type="info.ykqfrost.beans.Reader">
-        <result column="lib_username" property="username" />
+        <result column="lib_username" property="username"/>
     </resultMap>
 
     <select id="managerLogin" resultMap="UserResultMap" parameterType="LoginForm">
@@ -27,28 +29,15 @@
         WHERE lib_username = #{username} AND lib_password = #{password}
     </select>
 
-    <select id="selectAllBooks" resultMap="BookResultMap" >
+    <select id="selectAllBooks" resultMap="BookResultMap">
         SELECT *
         FROM bookdetails;
     </select>
-    
+
     <update id="updateBookDetail" parameterType="BookDetails">
-        UPDATE bookdetails
-        <trim prefix="SET" prefixOverrides=",">
-            <if test="bookName != null">
-                bookname = #{bookName}
-            </if>
-            <if test="author != null">
-                ,author = #{author}
-            </if>
-            <if test="introduce != null">
-                ,introduce = #{introduce}
-            </if>
-            <if test="location != null">
-                ,location = #{location}
-            </if>
-        </trim>
+        UPDATE bookdetails SET location = #{location},price = #{price}
         WHERE type_id = #{typeId}
     </update>
+
 
 </mapper>

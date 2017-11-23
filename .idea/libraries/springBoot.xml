@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="springBoot">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../springBoot.war!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

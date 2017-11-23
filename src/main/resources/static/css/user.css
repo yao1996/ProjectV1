@@ -1,0 +1,63 @@
+#top{
+	font: 14px/42px PingFangSC-Regular,HelveticaNeue-Light,'Helvetica Neue Light','Microsoft YaHei',sans-serif;
+    min-width: 1200px;
+    height: 40px;
+    color: #fff;
+    background: #3e3d43;
+    box-shadow: 0 2px 6px rgba(0,0,0,.4);
+}
+#content{
+	width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 15px;
+    height: 520px;
+    margin-bottom: 20px;
+}
+#page_top{
+	height: 200px;
+	margin-left: auto;
+	margin-right: auto;
+    background: #fff url(../images/back.png) center no-repeat;
+    background-size: cover;
+}
+#page_bottom{
+	height: 460px;
+	margin-left: auto;
+	margin-right: auto;
+/*	background-color: red;*/
+	border-width: 1px;
+    border-style: solid;
+    border-radius: 15px;
+}
+#img{
+	width: 150px;
+	height: 150px;
+	margin-top: 26px;
+	margin-left: 80px;
+	float: left;
+}
+#info{
+	float: left;
+	text-align: center;
+    line-height: 41px;
+    font-family: "Microsoft Yahei";
+    font-size: 24.5px;
+    color: #fff;
+    margin-left: 370px;
+    margin-top: 44px;
+}
+.table{
+  width: 95%;
+  margin: center;
+  margin-left: 2%;
+  margin-top: 50px;
+}
+#my{
+	width: 1050px;
+	margin-left: auto;
+	margin-right: auto;
+}

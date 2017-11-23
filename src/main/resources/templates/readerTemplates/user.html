@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>user</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: #fff;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="/static/css/user.css" th:href="@{/css/user.css}" />
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/manageBook.css" th:href="@{/css/manageBook.css}"/>
+</head>
+<body>
+<div id="top">
+    <a th:href="@{/}" style="color: white; margin-left: 80px; font-size: 19px">back</a>
+</div>
+<div id="page_top">
+    <div id="my">
+        <div id="info">
+            <p th:text="|Student ID : ${session.user.getUsername()}|">Name：xxxxx</p>
+            <p th:text="|Account : ${session.user.getAccount()}|">Account：XXXX</p>
+        </div>
+    </div>
+</div>
+<div id="book">
+    <!--/*@thymesVar id="allLogs" type="java.util.ArrayList<info.ykqfrost.beans.LogBean>"*/-->
+    <!--/*@thymesVar id="all" type="java.lang.String"*/-->
+    <div id="name" th:if="${all == 'true'}">All Records</div>
+    <div id="name" th:if="${all == 'false'}">UnReturned Records</div>
+    <table class="table" border="1" cellspacing="0">
+        <tr>
+            <td colspan="6">
+                <input type="button" value="All Records" class="change" id="all">
+                <input type="button" value="UnReturned" class="change" id="unReturned">
+            </td>
+        </tr>
+        <tr>
+            <td width="10%">Book ID</td>
+            <td width="15%">Book Name</td>
+            <td width="10%">Borrow Date</td>
+            <td width="10%">Return Date</td>
+            <td width="10%">Fee</td>
+            <td width="10%">Type</td>
+        </tr>
+        <tr th:each="log : ${allLogs}">
+            <td width="10%" th:text="${log.getBookId()}">Book ID</td>
+            <td width="15%" th:text="${log.getBookName()}">Book Name</td>
+            <td width="10%" th:text="${log.getBorrowDateWell()}">Borrow Date</td>
+            <td width="10%" th:text="${log.getReturnDateWell()}">Return Date</td>
+            <td width="10%" th:text="${log.getFee()}">Fee</td>
+            <td width="10%" th:text="${log.getType()}">Type</td>
+        </tr>
+    </table>
+</div>
+</body>
+<script type="text/javascript">
+    window.onload=function () {
+        document.getElementById('all').onclick=function () {
+            window.location.href="/userInfo";
+        };
+        document.getElementById('unReturned').onclick=function () {
+            window.location.href="/userUnReturned";
+        }
+    }
+</script>
+</html>

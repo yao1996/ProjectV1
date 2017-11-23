@@ -2,22 +2,61 @@ package info.ykqfrost.beans;
 
 import java.util.Date;
 
-/**
- * @author YaoKeQi
- * @date 2017/10/30
- */
 public class LogBean {
-    /**
-     * 借阅的编号
-     */
     private int borrowId;
     private int bookId;
     private String readerUsername;
     private Date borrowDate;
     private Date returnDate;
+    private String bookName;
+    private double fee;
+    private String type;
+
+    public LogBean() {
+    }
+
+    public String getType() {
+        return this.type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getBorrowDateWell() {
+        String s = this.borrowDate.toLocaleString();
+        String[] strings = s.split(" ");
+        return strings[0];
+    }
+
+    public String getReturnDateWell() {
+        if (this.returnDate == null) {
+            return "";
+        } else {
+            String s = this.returnDate.toLocaleString();
+            String[] strings = s.split(" ");
+            return strings[0];
+        }
+    }
+
+    public double getFee() {
+        return this.fee;
+    }
+
+    public void setFee(double fee) {
+        this.fee = fee;
+    }
+
+    public String getBookName() {
+        return this.bookName;
+    }
+
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
+    }
 
     public int getBorrowId() {
-        return borrowId;
+        return this.borrowId;
     }
 
     public void setBorrowId(int borrowId) {
@@ -25,7 +64,7 @@ public class LogBean {
     }
 
     public int getBookId() {
-        return bookId;
+        return this.bookId;
     }
 
     public void setBookId(int bookId) {
@@ -33,7 +72,7 @@ public class LogBean {
     }
 
     public String getReaderUsername() {
-        return readerUsername;
+        return this.readerUsername;
     }
 
     public void setReaderUsername(String readerUsername) {
@@ -41,7 +80,7 @@ public class LogBean {
     }
 
     public Date getBorrowDate() {
-        return borrowDate;
+        return this.borrowDate;
     }
 
     public void setBorrowDate(Date borrowDate) {
@@ -49,7 +88,7 @@ public class LogBean {
     }
 
     public Date getReturnDate() {
-        return returnDate;
+        return this.returnDate;
     }
 
     public void setReturnDate(Date returnDate) {

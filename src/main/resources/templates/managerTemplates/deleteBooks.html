@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Like Book</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/manageBook.css" th:href="@{/css/manageBook.css}"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/addBook.css" th:href="@{/css/addBook.css}"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/login.css" th:href="@{/css/login.css}">
+    <link rel="stylesheet" type="text/css" href="/static/font-awesome/css/font-awesome.min.css"
+          th:href="@{/font-awesome/css/font-awesome.min.css}"/>
+    <script type="text/javascript" src="/static/js/id.js" th:src="@{/js/id.js}"></script>
+</head>
+<body>
+<div class="bu1 ttt"></div>
+<div class="bu2">
+    <div class="vv ttt">
+        <img class="aa" src="/static/images/000.jpg" th:src="@{/images/000.jpg}">
+    </div>
+
+    <div class="sk clearFix">
+        <input class="ss" placeholder="Search the title or author" autocomplete="off" name="sousuo" type="text"
+               id="inner">
+        <div class="annui" id="manageClick">
+            <i class="fa fa-search" aria-hidden="true" id="search_id"></i>
+        </div>
+    </div>
+    <div class="cc clearFix">
+        <a href="/templates/readerTemplates/login.html" th:href="@{/login}"><div class="myyanse" id="fifth">exit</div></a>
+    </div>
+</div>
+<div class="tiantou">
+    <div class="biankuang clearFix">
+        <a href="manageBook.html" th:href="@{/manage}">
+            <div class="tongyong daohangyanse" id="first">allBooks</div>
+        </a>
+        <a href="addBooks.html" th:href="@{/manage/addBook}">
+            <div class="tongyong daohangyanse" id="second">addBooks</div>
+        </a>
+        <a href="borrowBooks.html" th:href="@{/manage/borrow}">
+            <div class="tongyong daohangyanse" id="third">borrowBooks</div>
+        </a>
+        <a href="returnBooks.html" th:href="@{/manage/return}">
+            <div class="tongyong daohangyanse" id="forth">returnBooks</div>
+        </a>
+        <a href="deleteBooks.html" th:href="@{/manage/delete}">
+            <div class="tongyong daohangyanse" id="forth">deleteBooks</div>
+        </a>
+        <a href="userManager.html" th:href="@{/manage/user}">
+            <div class="tongyong daohangyanse" id="fifth">userManage</div>
+        </a>
+    </div>
+</div>
+<div class="yincang" onmouseover="document.getElementById('oDiv').style.display='block'"
+     onmouseout="document.getElementById('oDiv').style.display='none'" style="display:none" id="oDiv"></div>
+
+<div id="book">
+    <div id="name">Delete</div>
+    <div id="itfl">
+        <!--/*@thymesVar id="deletForm" type="info.ykqfrost.beans.DeleteForm"*/-->
+        <form th:action="@{/manage/delete}" method="post" onsubmit="return checkAll()" th:object="${deletForm}">
+            <div id="info">
+                <div id="my_search">
+                    <input type="radio" name="method" value="byBookId" id="BookID" checked>Book ID
+                    <input type="radio" name="method" value="byIsbn13" id="ISBN">ISBN
+                </div>
+                <div id="change">
+                    BookID：<input type="text" name="bookId" class="my_input1">
+                </div>
+                <div id="my_info">
+                    Reason : <input type="text" name="reason" id="reason" class="my_input1">
+                </div>
+                <div style="margin-right: auto;margin-left: auto; width: 300px;margin-top: 30px;" th:if="${session.delete != null}" th:text="${session.delete}">
+                    delete result
+                </div>
+                <br/><br/>
+                <div class="return"><input type="submit" value="Confirm" class="finishReturn">
+                    <input type="button" value="Record" class="finishReturn" id="myrecord">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    document.getElementById("manageClick").onclick = function () {
+        var value = document.getElementById("inner").value;
+        if (value === "" || value === " ") {
+            alert("can not be null!");
+        } else {
+            window.location.href = "/manage/?search=" + value;
+        }
+    };
+</script>
+</body>
+</html>

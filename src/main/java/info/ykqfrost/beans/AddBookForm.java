@@ -1,17 +1,25 @@
 package info.ykqfrost.beans;
 
-/**
- * @author YaoKeQi
- * @date 2017/11/10
- */
 public class AddBookForm {
     private long isbn;
     private int totalNum;
     private String location;
     private boolean outPermission;
+    private double price;
+
+    public AddBookForm() {
+    }
+
+    public double getPrice() {
+        return this.price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
 
     public boolean isOutPermission() {
-        return outPermission;
+        return this.outPermission;
     }
 
     public void setOutPermission(boolean outPermission) {
@@ -19,7 +27,7 @@ public class AddBookForm {
     }
 
     public long getIsbn() {
-        return isbn;
+        return this.isbn;
     }
 
     public void setIsbn(long isbn) {
@@ -27,7 +35,7 @@ public class AddBookForm {
     }
 
     public int getTotalNum() {
-        return totalNum;
+        return this.totalNum;
     }
 
     public void setTotalNum(int totalNum) {
@@ -35,7 +43,7 @@ public class AddBookForm {
     }
 
     public String getLocation() {
-        return location;
+        return this.location;
     }
 
     public void setLocation(String location) {

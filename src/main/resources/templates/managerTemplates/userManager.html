@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Like Book</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" href="../css/manageBook.css" th:href="@{/css/manageBook.css}"/>
+    <link rel="stylesheet" type="text/css" href="../css/addBook.css" th:href="@{/css/addBook.css}"/>
+    <link rel="stylesheet" type="text/css" href="../font-awesome/css/font-awesome.min.css" th:href="@{/font-awesome/css/font-awesome.min.css}"/>
+</head>
+<body>
+<div class="bu1 ttt"></div>
+<div class="bu2">
+    <div class="vv ttt">
+        <img class="aa" src="../images/000.jpg" th:src="@{/images/000.jpg}">
+    </div>
+
+    <div class="sk clearFix">
+        <input class="ss" placeholder="Search user by student ID" autocomplete="off" name="sousuo" type="text"
+               id="inner">
+        <div class="annui" id="myClick">
+            <i class="fa fa-search" aria-hidden="true" id="search_id"></i>
+        </div>
+    </div>
+    <div class="cc clearFix">
+        <a href="/templates/readerTemplates/login.html" th:href="@{/login}"><div class="myyanse" id="fifth">exit</div></a>
+    </div>
+</div>
+<div class="tiantou">
+    <div class="biankuang clearFix">
+        <a href="manageBook.html" th:href="@{/manage}">
+            <div class="tongyong daohangyanse" id="first">allBooks</div>
+        </a>
+        <a href="addBooks.html" th:href="@{/manage/addBook}">
+            <div class="tongyong daohangyanse" id="second">addBooks</div>
+        </a>
+        <a href="borrowBooks.html" th:href="@{/manage/borrow}">
+            <div class="tongyong daohangyanse" id="third">borrowBooks</div>
+        </a>
+        <a href="returnBooks.html" th:href="@{/manage/return}">
+            <div class="tongyong daohangyanse" id="forth">returnBooks</div>
+        </a>
+        <a href="deleteBooks.html" th:href="@{/manage/delete}">
+            <div class="tongyong daohangyanse" id="forth">deleteBooks</div>
+        </a>
+        <a href="userManager.html" th:href="@{/manage/user}">
+            <div class="tongyong daohangyanse" id="fifth">userManage</div>
+        </a>
+    </div>
+</div>
+<div class="yincang" onmouseover="document.getElementById('oDiv').style.display='block'"
+     onmouseout="document.getElementById('oDiv').style.display='none'" style="display:none" id="oDiv"></div>
+
+<div id="book">
+    <div id="name1">Manage User</div>
+    <div id="itfl">
+        <div class="return"><input type="submit" value="ADD" class="finishReturn" id="jump"></div>
+        <table border="1" cellspacing="0" align="center" width="850px">
+            <tr>
+                <td width="33.333%">Student ID</td>
+                <td width="33.333%">Account</td>
+                <td width="33.333%">Operation</td>
+            </tr>
+            <!--/*@thymesVar id="users" type="java.util.ArrayList<info.ykqfrost.beans.Reader>"*/-->
+            <tr th:each="user : ${users}">
+                <td width="33.333%" th:text="${user.getUsername()}">14130120125</td>
+                <td width="33.333%" th:text="${user.getAccount()}">90</td>
+                <td width="33.333%"><a th:href="@{/manage/viewUser/(username=${user.getUsername()})}">View</a></td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    window.onload = function () {
+        document.getElementById('jump').onclick = function () {
+            window.location.href = "/manage/register";
+        };
+        document.getElementById("myClick").onclick = function () {
+            var value = document.getElementById("inner").value;
+            if (value === "" || value === " ") {
+                alert("can not be null!");
+            } else {
+                window.location.href = "/manage/user/?search=" + value;
+            }
+        };
+    };
+</script>
+</html>

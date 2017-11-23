@@ -4,37 +4,57 @@
 
 <mapper namespace="info.ykqfrost.dao.BookDao">
     <resultMap id="BookResultMap" type="BookDetails">
-        <id column="type_id" property="typeId" />
-        <result column="bookName" property="bookName" />
-        <result column="ISBN13" property="isbn13" javaType="Long" />
-        <result column="ISBN10" property="isbn10" javaType="Long" />
-        <result column="author" property="author" />
-        <result column="coverImage" property="coverImageUrl" />
-        <result column="introduce" property="introduce" />
-        <result column="totalNum" property="totalNum" />
-        <result column="location" property="location" />
-        <result column="remainNum" property="remainNum" />
-        <result column="outPermission" property="outPermission" />
-    </resultMap>
-    
-    <resultMap id="BooksMap" type="Book">
-        <id column="bookId" property="bookId" />
-        <result column="type_id" property="typeId" />
-        <result column="isBorrowed" property="isBorrowed" />
+        <id column="type_id" property="typeId"/>
+        <result column="bookName" property="bookName"/>
+        <result column="ISBN13" property="isbn13" javaType="Long"/>
+        <result column="ISBN10" property="isbn10" javaType="Long"/>
+        <result column="author" property="author"/>
+        <result column="coverImage" property="coverImageUrl"/>
+        <result column="introduce" property="introduce"/>
+        <result column="totalNum" property="totalNum"/>
+        <result column="location" property="location"/>
+        <result column="remainNum" property="remainNum"/>
+        <result column="outPermission" property="outPermission"/>
+        <result column="price" property="price"/>
+        <result column="publisher" property="publisher"/>
     </resultMap>
 
-    <select id="selectAllBooks" resultMap="BookResultMap" >
+    <resultMap id="BooksMap" type="Book">
+        <id column="bookId" property="bookId"/>
+        <result column="type_id" property="typeId"/>
+        <result column="isBorrowed" property="isBorrowed"/>
+    </resultMap>
+
+    <select id="selectAllBooks" resultMap="BookResultMap">
         SELECT *
         FROM bookdetails
     </select>
 
-    <select id="selectTypeIdByIsbn" resultType="Integer" parameterType="Long" >
+    <select id="selectBookNameByBookId" parameterType="int" resultType="String">
+        SELECT bookName
+        FROM bookdetails
+        WHERE type_id = (SELECT type_id FROM books WHERE bookId = #{bookId})
+    </select>
+
+    <select id="selectPriceByBookId" parameterType="int" resultType="Double">
+        SELECT price
+        FROM bookdetails
+        WHERE type_id = (SELECT type_id FROM books WHERE bookId = #{bookId})
+    </select>
+
+    <select id="selectOutsides" resultType="int">
+        SELECT count(bookId)
+        FROM books
+        WHERE isBorrowed = TRUE AND type_id = #{typeId}
+    </select>
+
+    <select id="selectTypeIdByIsbn" resultType="Integer" parameterType="Long">
         SELECT type_id
         FROM bookdetails
         WHERE ISBN10 = #{isbn} OR ISBN13 = #{isbn}
     </select>
 
-    <select id="selectByTypeId" resultMap="BookResultMap" parameterType="int" >
+    <select id="selectByTypeId" resultMap="BookResultMap" parameterType="int">
         SELECT *
         FROM bookdetails
         WHERE type_id = #{typeId}
@@ -45,13 +65,13 @@
         FROM bookdetails
         WHERE ISBN13 = #{isbn13}
     </select>
-    
+
     <select id="selectBookIdByTypeId" resultType="Integer" parameterType="int">
         SELECT bookId
         FROM books
         WHERE type_id = #{typeId}
     </select>
-    
+
     <select id="selectBookByBookId" parameterType="int" resultMap="BooksMap">
         SELECT *
         FROM books
@@ -61,53 +81,66 @@
     <select id="searchForBook" resultMap="BookResultMap" parameterType="String">
         SELECT *
         FROM bookdetails
-        WHERE bookname LIKE concat('%',#{search},'%') OR author LIKE concat('%',#{search},'%')
-              OR ISBN10 = #{search} OR ISBN13 = #{search}
+        WHERE bookname LIKE concat('%', #{search}, '%') OR author LIKE concat('%', #{search}, '%')
+        OR ISBN10 = #{search} OR ISBN13 = #{search}
+    </select>
+
+    <select id="selectDeleteRecords" resultType="DeleteForm">
+        SELECT *
+        FROM deleterecord
     </select>
 
     <insert id="addBook" parameterType="BookDetails" useGeneratedKeys="true" keyProperty="typeId">
-        INSERT INTO bookdetails (ISBN10,ISBN13,bookName, author, coverImage, introduce, totalNum, remainNum, location,outPermission)
-        VALUES (#{isbn10},#{isbn13},#{bookName},#{author},#{coverImageUrl},#{introduce},#{totalNum},#{totalNum},#{location},#{outPermission})
+        INSERT INTO bookdetails (ISBN10, ISBN13, bookName, author, coverImage, introduce, totalNum, remainNum, location, outPermission, price, publisher)
+        VALUES (#{isbn10}, #{isbn13}, #{bookName}, #{author}, #{coverImageUrl}, #{introduce}, #{totalNum}, #{totalNum},
+        #{location}, #{outPermission}, #{price}, #{publisher})
     </insert>
-    
-    <update id="addExisted" parameterType="BookDetails" useGeneratedKeys="true" keyProperty="typeId">
-        UPDATE bookdetails SET totalNum= totalNum+#{totalNum}, remainNum = remainNum + #{totalNum}
-        WHERE ISBN13 = #{Isbn13} OR ISBN10 = #{Isbn10}
+
+    <update id="addExisted" parameterType="BookDetails">
+        UPDATE bookdetails
+        SET totalNum = totalNum + #{totalNum}, remainNum = remainNum + #{totalNum}
+        WHERE ISBN13 = #{isbn13} OR ISBN10 = #{isbn10}
     </update>
 
-    <insert id="addSpecificBook" parameterType="int" useGeneratedKeys="true" keyProperty="bookId">
-        INSERT INTO books(type_id, isBorrowed)
-        VALUES (#{typeId},FALSE )
+    <insert id="addSpecificBook" parameterType="Book" useGeneratedKeys="true" keyProperty="bookId">
+        INSERT INTO books (type_id, isBorrowed)
+        VALUES (#{typeId}, FALSE)
     </insert>
-    
+
     <delete id="deleteBookByIsbn13" parameterType="long">
         DELETE FROM bookdetails
         WHERE ISBN13 = #{isbn13}
     </delete>
-    
+
     <delete id="deleteBooksByBookId" parameterType="int">
         DELETE FROM books
         WHERE bookId = #{bookId}
     </delete>
-    
+
     <delete id="deleteBooksByTypeId" parameterType="int">
         DELETE FROM books
         WHERE type_id = #{typeId}
     </delete>
-    
+
     <update id="deleteOneBookOutsideByBookId" parameterType="int">
-        UPDATE bookdetails SET totalNum = totalNum -1
-        WHERE type_id = (SELECT type_id FROM books WHERE bookId = #{bookId})
+        UPDATE bookdetails
+        SET totalNum = totalNum - 1
+        WHERE type_id = (SELECT type_id
+        FROM books
+        WHERE bookId = #{bookId})
     </update>
 
     <update id="deleteOneBookInsideByBookId" parameterType="int">
-        UPDATE bookdetails SET totalNum = totalNum -1,remainNum = remainNum -1
-        WHERE type_id = (SELECT type_id FROM books WHERE bookId = #{bookId})
+        UPDATE bookdetails
+        SET totalNum = totalNum - 1, remainNum = remainNum - 1
+        WHERE type_id = (SELECT type_id
+        FROM books
+        WHERE bookId = #{bookId})
     </update>
 
     <insert id="deleteRecord" parameterType="DeleteForm">
-        INSERT INTO deleterecord (bookId, isbn13, reason,bookName)
-                VALUES (#{bookId},#{isbn13},#{reason},#{bookName})
+        INSERT INTO deleterecord (bookId, isbn13, reason, bookName)
+        VALUES (#{bookId}, #{isbn13}, #{reason}, #{bookName})
     </insert>
 
 </mapper>

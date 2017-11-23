@@ -1,7 +1,7 @@
 function checkname() {
   var username=document.getElementById('username').value;
   var nameTip=document.getElementById('nameTip');
-  var reg=/^[a-zA-Z0-9]{2,6}$/;
+  var reg=/^[a-zA-Z0-9]{10,12}$/;
   if (reg.test(username)) {
     nameTip.innerHTML="Available".fontcolor("green");
     return true;
@@ -47,7 +47,7 @@ function checkAll(){
 
 function demandname(){
   var nameTip=document.getElementById('nameTip');
-  nameTip.innerHTML="2-6 characters";
+  nameTip.innerHTML="student ID";
 }
 
 function demandpass(){

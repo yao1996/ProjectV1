@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Record</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/login.css" th:href="@{/css/login.css}">
+</head>
+<body id="backbody">
+<div id="back_total">
+    <div id="header">
+        <div id="mylogo_left"><img src="/static/images/logo.png" th:src="@{/images/logo.png}" width="80px" height="80px"></div>
+        <div id="mylogo_right"><a href="deleteBooks.html" th:href="@{/manage/delete}">back</a></div>
+    </div>
+    <table align="center" width="95%" border="1" cellspacing="0">
+        <tr>
+            <td width="20%">BookName</td>
+            <td width="10%">Book ID</td>
+            <td width="20%">ISBN</td>
+            <td width="50%">Reason</td>
+        </tr>
+        <!--/*@thymesVar id="records" type="java.util.ArrayList<info.ykqfrost.beans.DeleteForm>"*/-->
+        <tr th:each="deleteRecord : ${records}">
+            <td width="20%" th:text="${deleteRecord.getBookName()}">BookName</td>
+            <td width="10%" th:text="${deleteRecord.getBookId()}">Book ID</td>
+            <td width="20%" th:text="${deleteRecord.getIsbn13()}">ISBN13</td>
+            <td width="50%" th:text="${deleteRecord.getReason()}">Reason</td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

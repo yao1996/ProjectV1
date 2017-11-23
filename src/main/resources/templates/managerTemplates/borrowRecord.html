@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Record</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/manageBook.css" th:href="@{/css/manageBook.css}"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/addBook.css" th:href="@{/css/addBook.css}"/>
+    <link rel="stylesheet" type="text/css" href="/static/font-awesome/css/font-awesome.min.css"
+          th:href="@{/font-awesome/css/font-awesome.min.css}"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/login.css" th:href="@{/css/login.css}">
+</head>
+<body id="backbody">
+<!--/*@thymesVar id="isSearch" type="java.lang.String"*/-->
+<div id="isSearch" hidden th:text="${isSearch}"></div>
+<div id="back_total">
+    <div id="header">
+        <div id="mylogo_left"><img src="/static/images/logo.png" th:src="@{/images/logo.png}" width="80px"
+                                   height="80px"></div>
+        <div id="mylogo_right"><a href="borrowBooks.html" th:href="@{/manage/borrow}">back</a></div>
+    </div>
+    <div class="sk clearFix">
+        <input class="ss" placeholder="Select by student ID or book ID" autocomplete="off" name="sousuo" type="text"
+               id="inner">
+        <div class="annui" id="myClick">
+            <i class="fa fa-search" aria-hidden="true" id="search_id"></i>
+        </div>
+    </div>
+    <div style="height: 100px;width: 100px;margin-right: auto;margin-left: auto"></div>
+    <table align="center" width="95%" border="1" cellspacing="0">
+        <tr>
+            <td colspan="7" align="center">
+                <input type="button" value="All Records" class="change" id="all">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="button" value="UnReturned" class="change" id="unReturned">
+            </td>
+        </tr>
+        <tr>
+            <td width="20%">BookName</td>
+            <td width="10%">Book ID</td>
+            <td width="20%">Student ID</td>
+            <td width="15%">Borrow Date</td>
+            <td width="15%">Return Date</td>
+            <td width="10%">Fee</td>
+            <td width="10%">Type</td>
+        </tr>
+        <!--/*@thymesVar id="records" type="java.util.ArrayList<info.ykqfrost.beans.LogBean>"*/-->
+        <tr th:each="borrowRecord : ${records}">
+            <td width="20%" th:text="${borrowRecord.getBookName()}">BookName</td>
+            <td width="10%" th:text="${borrowRecord.getBookId()}">Book ID</td>
+            <td width="20%" th:text="${borrowRecord.getReaderUsername()}">Student ID</td>
+            <td width="20%" th:text="${borrowRecord.getBorrowDateWell()}">Borrow Date</td>
+            <td width="20%" th:text="${borrowRecord.getReturnDateWell()}">Return Date</td>
+            <td width="10%" th:text="${borrowRecord.getFee()}">Fee</td>
+            <td width="10%" th:text="${borrowRecord.getType()}">Type</td>
+        </tr>
+    </table>
+</div>
+</body>
+<script type="text/javascript">
+    window.onload = function () {
+        document.getElementById('myClick').onclick = function () {
+            var value = document.getElementById("inner").value;
+            if (value === "" || value === " ") {
+                alert("can not be null!");
+            } else {
+                window.location.href = "/manage/borrowRecord/?search=" + value;
+            }
+        };
+        var search = document.getElementById("isSearch").innerHTML;
+        document.getElementById('all').onclick = function () {
+            if (search === 'false') {
+                window.location.href = "/manage/borrowRecord";
+            } else {
+                window.location.href = "/manage/borrowRecord/?search=" + search;
+            }
+        };
+        document.getElementById('unReturned').onclick = function () {
+            if (search === 'false') {
+                window.location.href = "/manage/borrowUnReturnedRecord";
+            } else {
+                window.location.href = "/manage/borrowUnReturnedRecord/?search=" + search;
+            }
+        }
+    }
+</script>
+</html>

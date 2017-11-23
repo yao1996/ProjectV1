@@ -4,31 +4,42 @@
 
 <mapper namespace="info.ykqfrost.dao.ReaderDao">
     <resultMap id="ReaderResultMap" type="info.ykqfrost.beans.Reader">
-        <result column="r_username" property="username" />
-        <result column="r_password" property="password" />
-        <result column="r_account" property="account" />
+        <result column="r_username" property="username"/>
+        <result column="r_password" property="password"/>
+        <result column="r_account" property="account"/>
     </resultMap>
 
     <select id="selectAll" resultMap="ReaderResultMap">
-        SELECT r_username,r_password,r_account
+        SELECT
+        r_username,
+        r_password,
+        r_account
         FROM reader
     </select>
 
-    <select id="selectOneById" resultMap="ReaderResultMap" parameterType="int">
+    <select id="selectOneById" resultMap="ReaderResultMap" parameterType="String">
         SELECT *
         FROM reader
         WHERE r_username = #{username}
     </select>
 
     <select id="login" parameterType="LoginForm" resultMap="ReaderResultMap">
-        SELECT r_username,r_account
+        SELECT
+        r_username,
+        r_account
         FROM reader
         WHERE r_username = #{username} AND r_password = #{password}
     </select>
 
     <insert id="createReader" parameterType="Reader">
-        INSERT INTO reader( r_username, r_password, r_account)
+        INSERT INTO reader (r_username, r_password, r_account)
         VALUES
-        (#{username},#{password},50)
+        (#{username}, #{password}, #{account})
     </insert>
+
+    <update id="recharge" parameterType="Reader">
+        UPDATE reader
+        SET r_account = r_account + #{account}
+        WHERE r_username = #{username}
+    </update>
 </mapper>

@@ -4,48 +4,73 @@
 <mapper namespace="info.ykqfrost.dao.BorrowReturnDao">
 
     <parameterMap id="LogParamMap" type="LogBean">
-        <parameter property="borrowId" javaType="int" />
-        <parameter property="bookId" javaType="int" />
-        <parameter property="readerId" javaType="int" />
-        <parameter property="returnDate" javaType="Date" />
-        <parameter property="borrowDate" javaType="Date" />
+        <parameter property="borrowId" javaType="int"/>
+        <parameter property="bookId" javaType="int"/>
+        <parameter property="readerUsername" javaType="String"/>
+        <parameter property="returnDate" javaType="Date"/>
+        <parameter property="borrowDate" javaType="Date"/>
+        <parameter property="type" javaType="String" />
     </parameterMap>
 
     <resultMap id="LogResultMap" type="LogBean">
-        <id property="borrowId" column="b_id" />
-        <result column="book_id" property="bookId" />
-        <result column="reader_id" property="readerId" />
-        <result column="borrow_date" property="borrowDate" />
-        <result column="return_date" property="returnDate" />
+        <id property="borrowId" column="b_id"/>
+        <result column="book_id" property="bookId"/>
+        <result column="reader_username" property="readerUsername"/>
+        <result column="borrow_date" property="borrowDate"/>
+        <result column="return_date" property="returnDate"/>
+        <result column="type" property="type" />
     </resultMap>
 
-    <select id="outPermission" parameterType="int" >
-        SELECT outPermission FROM bookdetails
-        WHERE type_id = (SELECT type_id FROM books WHERE bookId = #{bookId})
+    <select id="outPermission" parameterType="int" resultType="Boolean">
+        SELECT outPermission
+        FROM bookdetails
+        WHERE type_id = (SELECT type_id
+        FROM books
+        WHERE bookId = #{bookId})
     </select>
 
-    <update id="borrowBook" parameterType="int" >
-        UPDATE bookdetails SET remainNum = bookdetails.remainNum-1
-        WHERE type_id = (SELECT type_id FROM books WHERE bookId = #{bookId})
-    </update>
-    
-    <update id="returnBook" parameterType="int">
-        UPDATE bookdetails SET remainNum = remainNum +1
-        WHERE type_id = (SELECT type_id FROM books WHERE bookId = #{bookId})
-    </update>
-    
-    <update id="returnLog" parameterMap="LogParamMap">
-        UPDATE borrowlog SET return_date = #{returnDate}
-        WHERE book_id = #{bookId}
+    <update id="borrowBook" parameterType="int">
+        UPDATE bookdetails
+        SET remainNum = remainNum - 1
+        WHERE type_id = (SELECT type_id
+        FROM books
+        WHERE bookId = #{bookId})
     </update>
 
-    <insert id="borrowLog" parameterMap="LogParamMap" >
+    <update id="returnBook" parameterType="int">
+        UPDATE bookdetails
+        SET remainNum = remainNum + 1
+        WHERE type_id = (SELECT type_id
+        FROM books
+        WHERE bookId = #{bookId})
+    </update>
+
+    <update id="borrowBooks" parameterType="int">
+        UPDATE books
+        SET isBorrowed = TRUE
+        WHERE bookId = #{bookId}
+    </update>
+
+    <update id="returnBooks" parameterType="int">
+        UPDATE books
+        SET isBorrowed = FALSE
+        WHERE bookId = #{bookId}
+    </update>
+
+    <update id="returnLog" parameterMap="LogParamMap">
+        UPDATE borrowlog
+        SET return_date = #{returnDate},fee = #{fee},type = #{type}
+        WHERE book_id = #{bookId} AND return_date IS NULL
+    </update>
+
+    <insert id="borrowLog" parameterMap="LogParamMap">
         INSERT INTO borrowlog (book_id, reader_username, borrow_date) VALUES
-            (#{bookId},#{readerId},#{borrowDate})
+        (#{bookId}, #{readerUsername}, #{borrowDate})
     </insert>
 
     <select id="selectUnReturned" resultMap="LogResultMap">
-        SELECT * FROM borrowlog
+        SELECT *
+        FROM borrowlog
         WHERE return_date IS NULL
     </select>
 
@@ -54,15 +79,73 @@
         FROM borrowlog
     </select>
 
+    <select id="selectAllLogOne" resultMap="LogResultMap">
+        SELECT *
+        FROM borrowlog
+        WHERE reader_username = #{username}
+    </select>
+
+    <select id="selectUnReturnedOne" resultMap="LogResultMap">
+        SELECT *
+        FROM borrowlog
+        WHERE reader_username = #{username} AND return_date IS NULL
+    </select>
+
     <select id="selectBorrowNum" resultType="Integer" parameterType="String">
         SELECT count(b_id)
         FROM borrowlog
-        WHERE reader_username = #{readerUsername}  AND return_date IS NULL
+        WHERE reader_username = #{readerUsername} AND return_date IS NULL
+    </select>
+
+    <select id="selectBorrowNumOneBook" resultType="int">
+        SELECT count(b_id)
+        FROM (SELECT bookId , type_id FROM books WHERE isBorrowed = TRUE ) AS a
+        RIGHT JOIN (SELECT * FROM borrowlog WHERE return_date IS NULL ) AS b
+        ON a.bookId = b.book_id
+        WHERE reader_username = #{0} AND a.type_id = (SELECT type_id FROM books WHERE books.bookId = #{1})
+    </select>
+
+    <select id="isBorrowed" resultType="Boolean" parameterType="int">
+        SELECT isBorrowed
+        FROM books
+        WHERE bookId = #{bookId}
     </select>
 
     <select id="selectRemainNum" resultType="int" parameterType="int">
         SELECT remainNum
         FROM bookdetails
-        WHERE type_id = #{typeId}
+        WHERE type_id = (SELECT type_id
+        FROM books
+        WHERE bookId = #{bookId})
+    </select>
+
+    <select id="selectBorrowStu" parameterType="int" resultType="String">
+        SELECT reader_username
+        FROM borrowlog
+        WHERE book_id = #{bookId} AND return_date IS NULL
+    </select>
+
+    <update id="lessMoney" parameterType="Reader">
+        UPDATE reader
+        SET r_account = r_account - #{account}
+        WHERE r_username = #{username}
+    </update>
+
+    <select id="selectBorrowDate" parameterType="int" resultType="Date">
+        SELECT borrow_date
+        FROM borrowlog
+        WHERE book_id = #{bookId} AND return_date IS NULL
+    </select>
+
+    <select id="searchLog" parameterType="String" resultMap="LogResultMap">
+        SELECT *
+        FROM borrowlog
+        WHERE reader_username = #{search} OR book_id = #{search}
+    </select>
+
+    <select id="searchUnReturnedLog" parameterType="String" resultMap="LogResultMap">
+        SELECT *
+        FROM borrowlog
+        WHERE (reader_username = #{search} OR book_id = #{search}) AND return_date IS NULL
     </select>
 </mapper>

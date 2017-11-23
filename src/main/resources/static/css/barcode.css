@@ -1,0 +1,21 @@
+.dange{
+	float: left;
+	width: 250px;
+	height: 100px;
+	margin-left: 50px;
+	margin-top: 30px;
+	text-align: center;
+}
+#meihua{
+	width: 450px;
+	margin-left: auto;
+	margin-right: auto;
+	padding-top: 20px;
+	font: 700 18px/38px PingFangSC-Regular,HelveticaNeue-Light,'Helvetica Neue Light','Microsoft YaHei',sans-serif;
+	text-align: center;
+}
+.clearFix:before, .clearFix:after {
+content: '';
+display: table;
+  clear:both;
+}

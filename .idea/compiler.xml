@@ -6,10 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="Douban4jOAuth2" />
         <module name="ProjectOne" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="Douban4jOAuth2" target="1.6" />
       <module name="ProjectOne" target="1.8" />
     </bytecodeTargetLevel>
   </component>

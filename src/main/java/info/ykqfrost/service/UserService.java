@@ -4,54 +4,61 @@ import info.ykqfrost.beans.LoginForm;
 import info.ykqfrost.beans.Reader;
 import info.ykqfrost.dao.ManagerDao;
 import info.ykqfrost.dao.ReaderDao;
+import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-
-/**
- * @author YaoKeQi
- * @date 2017/10/27
- */
 @Service
 public class UserService {
     private ReaderDao readerDao;
     private ManagerDao managerDao;
+
+    public UserService() {
+    }
+
     @Autowired
     public void setReaderDao(ReaderDao readerDao) {
         this.readerDao = readerDao;
     }
+
     @Autowired
     public void setManagerDao(ManagerDao managerDao) {
         this.managerDao = managerDao;
     }
 
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional(
+            rollbackFor = {Exception.class}
+    )
     public boolean register(Reader reader) throws Exception {
         try {
-            return readerDao.createReader(reader)==1;
-        }catch (Exception e){
+            return this.readerDao.createReader(reader) == 1;
+        } catch (Exception var3) {
             throw new Exception();
         }
     }
 
     public ArrayList<Reader> selectAll() {
-        return readerDao.selectAll();
+        return this.readerDao.selectAll();
     }
 
-    public Reader selectOneById(int userId){
-        return readerDao.selectOneById(userId);
+    public Reader selectOneById(String username) {
+        return this.readerDao.selectOneById(username);
     }
 
-    public Reader login (LoginForm form) {
+    public Reader login(LoginForm form) {
         String admin = "admin";
         String reader = "reader";
         if (reader.equals(form.getAuthority())) {
-            return readerDao.login(form);
-        }else if (admin.equals(form.getAuthority())) {
-            return managerDao.managerLogin(form);
+            return this.readerDao.login(form);
+        } else {
+            return admin.equals(form.getAuthority()) ? this.managerDao.managerLogin(form) : null;
         }
-        return null;
+    }
+
+    public void recharge(Reader reader) throws Exception {
+        if (this.readerDao.recharge(reader) == 0) {
+            throw new Exception("recharge failed !");
+        }
     }
 }

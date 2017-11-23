@@ -1,9 +1,5 @@
 package info.ykqfrost.beans;
 
-/**
- * @date  2017/10/15.
- * @author YaoKeQi
- */
 public class BookDetails {
     private int typeId;
     private long isbn10;
@@ -16,9 +12,30 @@ public class BookDetails {
     private int remainNum;
     private String location;
     private boolean outPermission;
+    private double price;
+    private String publisher;
+
+    public BookDetails() {
+    }
+
+    public String getPublisher() {
+        return this.publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    public double getPrice() {
+        return this.price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
 
     public boolean isOutPermission() {
-        return outPermission;
+        return this.outPermission;
     }
 
     public void setOutPermission(boolean outPermission) {
@@ -26,7 +43,7 @@ public class BookDetails {
     }
 
     public long getIsbn10() {
-        return isbn10;
+        return this.isbn10;
     }
 
     public void setIsbn10(long isbn10) {
@@ -34,7 +51,7 @@ public class BookDetails {
     }
 
     public long getIsbn13() {
-        return isbn13;
+        return this.isbn13;
     }
 
     public void setIsbn13(long isbn13) {
@@ -42,7 +59,7 @@ public class BookDetails {
     }
 
     public String getCoverImageUrl() {
-        return coverImageUrl;
+        return this.coverImageUrl;
     }
 
     public void setCoverImageUrl(String coverImageUrl) {
@@ -50,7 +67,7 @@ public class BookDetails {
     }
 
     public int getTotalNum() {
-        return totalNum;
+        return this.totalNum;
     }
 
     public void setTotalNum(int totalNum) {
@@ -58,7 +75,7 @@ public class BookDetails {
     }
 
     public int getRemainNum() {
-        return remainNum;
+        return this.remainNum;
     }
 
     public void setRemainNum(int remainNum) {
@@ -66,7 +83,7 @@ public class BookDetails {
     }
 
     public String getLocation() {
-        return location;
+        return this.location;
     }
 
     public void setLocation(String location) {
@@ -85,25 +102,23 @@ public class BookDetails {
         this.author = author;
     }
 
-
     public void setIntroduce(String introduce) {
         this.introduce = introduce;
     }
 
     public int getTypeId() {
-        return typeId;
+        return this.typeId;
     }
 
     public String getBookName() {
-        return bookName;
+        return this.bookName;
     }
 
     public String getAuthor() {
-        return author;
+        return this.author;
     }
 
-
     public String getIntroduce() {
-        return introduce;
+        return this.introduce;
     }
 }
