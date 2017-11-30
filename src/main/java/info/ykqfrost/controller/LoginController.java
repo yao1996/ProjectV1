@@ -31,6 +31,7 @@ public class LoginController {
     public String login(Model model,HttpSession session) {
         if (!userFlag) {
             session.removeAttribute("user");
+            session.removeAttribute("IS_MANAGER");
         }
         userFlag = false;
         model.addAttribute("form",new LoginForm());

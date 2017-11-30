@@ -13,9 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class ManageIndex {
     private BookService bookService;
 
-    public ManageIndex() {
-    }
-
     @Autowired
     public void setBookService(BookService bookService) {
         this.bookService = bookService;
@@ -27,20 +24,14 @@ public class ManageIndex {
         if (type != null && type.equals(exit)) {
             session.removeAttribute("IS_MANAGER");
         }
-
-        String isManager = "IS_MANAGER";
-        if (session.getAttribute(isManager) != null && session.getAttribute(isManager).equals(true)) {
-            ArrayList bookDetailses;
-            if (search == null) {
-                bookDetailses = this.bookService.selectAllBooks();
-            } else {
-                bookDetailses = this.bookService.searchForBook(search);
-            }
-
-            model.addAttribute("bookDetailses", bookDetailses);
-            return "managerTemplates/manageBook";
+        ArrayList bookDetailses;
+        if (search == null) {
+            bookDetailses = this.bookService.selectAllBooks();
         } else {
-            return "redirect:/login";
+            bookDetailses = this.bookService.searchForBook(search);
         }
+
+        model.addAttribute("bookDetailses", bookDetailses);
+        return "managerTemplates/manageBook";
     }
 }

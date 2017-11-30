@@ -14,9 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class DeleteRecord {
     private BookService bookService;
 
-    public DeleteRecord() {
-    }
-
     @Autowired
     public void setBookService(BookService bookService) {
         this.bookService = bookService;

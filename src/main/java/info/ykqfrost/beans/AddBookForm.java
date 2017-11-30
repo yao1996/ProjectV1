@@ -7,9 +7,6 @@ public class AddBookForm {
     private boolean outPermission;
     private double price;
 
-    public AddBookForm() {
-    }
-
     public double getPrice() {
         return this.price;
     }

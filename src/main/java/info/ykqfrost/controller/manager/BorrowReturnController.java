@@ -33,60 +33,44 @@ public class BorrowReturnController {
         if (this.borrowFlag) {
             session.removeAttribute("isBorrowed");
         }
-
         this.borrowFlag = true;
-        String isManager = "IS_MANAGER";
-        if (session.getAttribute(isManager) != null && session.getAttribute(isManager).equals(true)) {
-            model.addAttribute("logBean", new LogBean());
-            return "managerTemplates/borrowBooks";
-        } else {
-            return "redirect:/login";
-        }
+        model.addAttribute("logBean", new LogBean());
+        return "managerTemplates/borrowBooks";
     }
 
     @PostMapping({"/borrow"})
     public String borrowCommit(@Valid LogBean logBean, BindingResult bindingResult, HttpSession session) {
         logBean.setBorrowDate(new Date());
-
         try {
             this.borrowReturnService.borrowBook(logBean);
             session.setAttribute("isBorrowed", "true");
         } catch (Exception var5) {
             session.setAttribute("isBorrowed", var5.getMessage());
         }
-
         this.borrowFlag = false;
         return "redirect:/manage/borrow";
     }
 
     @GetMapping({"/return"})
     public String returnBook(Model model, HttpSession session) {
-        String isManager = "IS_MANAGER";
-        if (session.getAttribute(isManager) != null && session.getAttribute(isManager).equals(true)) {
-            if (this.returnFlag) {
-                session.removeAttribute("isReturned");
-            }
-
-            this.returnFlag = true;
-            model.addAttribute("logBean", new LogBean());
-            return "managerTemplates/returnBooks";
-        } else {
-            return "redirect:/login";
+        if (this.returnFlag) {
+            session.removeAttribute("isReturned");
         }
+        this.returnFlag = true;
+        model.addAttribute("logBean", new LogBean());
+        return "managerTemplates/returnBooks";
     }
 
     @PostMapping({"/return"})
     public String returnBookCommit(@Valid LogBean logBean, BindingResult bindingResult, HttpSession session) {
         logBean.setReturnDate(new Date());
         logBean.setType("normal");
-
         try {
             double lessMoney = this.borrowReturnService.returnBook(logBean);
             session.setAttribute("isReturned", "return succeeded , consume " + lessMoney + " yuan");
         } catch (Exception var6) {
             session.setAttribute("isReturned", var6.getMessage());
         }
-
         this.returnFlag = false;
         return "redirect:/manage/return";
     }
@@ -140,7 +124,6 @@ public class BorrowReturnController {
             logBeans = this.borrowReturnService.searchUnReturnedLog(search);
             model.addAttribute("isSearch", search);
         }
-
         model.addAttribute("records", logBeans);
         return "managerTemplates/borrowRecord";
     }

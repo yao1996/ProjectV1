@@ -1,5 +1,7 @@
 package info.ykqfrost.beans;
 
+import info.ykqfrost.utils.DateToString;
+
 import java.util.Date;
 
 public class LogBean {
@@ -24,18 +26,14 @@ public class LogBean {
     }
 
     public String getBorrowDateWell() {
-        String s = this.borrowDate.toLocaleString();
-        String[] strings = s.split(" ");
-        return strings[0];
+        return DateToString.dateToString(borrowDate);
     }
 
     public String getReturnDateWell() {
         if (this.returnDate == null) {
             return "";
         } else {
-            String s = this.returnDate.toLocaleString();
-            String[] strings = s.split(" ");
-            return strings[0];
+            return DateToString.dateToString(returnDate);
         }
     }
 

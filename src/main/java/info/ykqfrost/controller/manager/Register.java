@@ -18,9 +18,6 @@ public class Register {
     private boolean remove = false;
     private UserService userService;
 
-    public Register() {
-    }
-
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;

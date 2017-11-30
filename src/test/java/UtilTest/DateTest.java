@@ -1,5 +1,6 @@
 package UtilTest;
 
+import info.ykqfrost.utils.DateToString;
 import org.junit.Test;
 
 import java.text.SimpleDateFormat;
@@ -17,12 +18,6 @@ public class DateTest {
         Calendar calendar = Calendar.getInstance();
         System.out.println(calendar.getTime());
         String s = sdf.format(calendar.getTime());
-        System.out.println(s);
+        System.out.println(DateToString.dateToString(new Date()));
     }
-
-    public void testUtils() {
-        Hashtable hashtable = new Hashtable();
-        Enumeration enumeration = hashtable.elements();
-    }
-
 }

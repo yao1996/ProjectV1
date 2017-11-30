@@ -3,8 +3,10 @@ package info.ykqfrost.controller.manager;
 import info.ykqfrost.beans.BookDetails;
 import info.ykqfrost.service.BookService;
 import info.ykqfrost.service.ManagerService;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping({"/manage"})
 public class ModifyBook {
-    static final String IS_MANAGER = "IS_MANAGER";
     private boolean modifyFlag = false;
     private ManagerService managerService;
     private final BookService bookService;
@@ -30,19 +31,15 @@ public class ModifyBook {
 
     @GetMapping({"/modify"})
     public String modify(HttpSession session, Model model, @RequestParam String typeId) {
-        if (session.getAttribute("IS_MANAGER") != null && session.getAttribute("IS_MANAGER").equals(true)) {
-            if (!this.modifyFlag) {
-                session.removeAttribute("modifyMessage");
-            }
-
-            this.modifyFlag = false;
-            int id = Integer.parseInt(typeId);
-            BookDetails bookDetails = this.bookService.selectByTypeId(id);
-            model.addAttribute("bookDetails", bookDetails);
-            return "managerTemplates/modifyBook";
-        } else {
-            return "redirect:/login";
+        if (!this.modifyFlag) {
+            session.removeAttribute("modifyMessage");
         }
+
+        this.modifyFlag = false;
+        int id = Integer.parseInt(typeId);
+        BookDetails bookDetails = this.bookService.selectByTypeId(id);
+        model.addAttribute("bookDetails", bookDetails);
+        return "managerTemplates/modifyBook";
     }
 
     @PostMapping({"/modify"})

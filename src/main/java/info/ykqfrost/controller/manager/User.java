@@ -4,9 +4,11 @@ import info.ykqfrost.beans.LogBean;
 import info.ykqfrost.beans.Reader;
 import info.ykqfrost.service.BorrowReturnService;
 import info.ykqfrost.service.UserService;
+
 import java.util.ArrayList;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,10 +24,6 @@ public class User {
     private UserService userService;
     private BorrowReturnService borrowReturnService;
     private boolean rechargeFlag = false;
-    private static final String ISMANAGER = "IS_MANAGER";
-
-    public User() {
-    }
 
     @Autowired
     public void setBorrowReturnService(BorrowReturnService borrowReturnService) {
@@ -38,71 +36,58 @@ public class User {
     }
 
     @GetMapping({"/user"})
-    public String user(Model model, @RequestParam(required = false) String search, HttpSession session) {
-        if (session.getAttribute("IS_MANAGER") != null && session.getAttribute("IS_MANAGER").equals(true)) {
-            ArrayList readers;
-            if (search == null) {
-                readers = this.userService.selectAll();
-            } else {
-                Reader reader = this.userService.selectOneById(search);
-                readers = new ArrayList();
-                if (reader == null) {
-                    return "managerTemplates/userManager";
-                }
-
-                readers.add(reader);
-            }
-
-            model.addAttribute("users", readers);
-            return "managerTemplates/userManager";
+    public String user(Model model, @RequestParam(required = false) String search) {
+        ArrayList<Reader> readers;
+        if (search == null) {
+            readers = this.userService.selectAll();
         } else {
-            return "redirect:/login";
+            Reader reader = this.userService.selectOneById(search);
+            readers = new ArrayList<>();
+            if (reader == null) {
+                return "managerTemplates/userManager";
+            }
+            readers.add(reader);
         }
+
+        model.addAttribute("users", readers);
+        return "managerTemplates/userManager";
     }
 
     @GetMapping({"/viewUser"})
     public String viewUser(@RequestParam String username, Model model, HttpSession session) {
-        if (session.getAttribute("IS_MANAGER") != null && session.getAttribute("IS_MANAGER").equals(true)) {
-            if (!this.rechargeFlag) {
-                session.removeAttribute("recharge");
-            }
+        if (!this.rechargeFlag) {
+            session.removeAttribute("recharge");
+        }
 
-            this.rechargeFlag = false;
-            Reader reader = this.userService.selectOneById(username);
-            if (reader == null) {
-                return "managerTemplates/userManager";
-            } else {
-                ArrayList<LogBean> logBeans = this.borrowReturnService.selectAllLogOne(username);
-                model.addAttribute("user", reader);
-                model.addAttribute("allLogs", logBeans);
-                model.addAttribute("all", "true");
-                return "managerTemplates/viewUser";
-            }
+        this.rechargeFlag = false;
+        Reader reader = this.userService.selectOneById(username);
+        if (reader == null) {
+            return "managerTemplates/userManager";
         } else {
-            return "redirect:/login";
+            ArrayList<LogBean> logBeans = this.borrowReturnService.selectAllLogOne(username);
+            model.addAttribute("user", reader);
+            model.addAttribute("allLogs", logBeans);
+            model.addAttribute("all", "true");
+            return "managerTemplates/viewUser";
         }
     }
 
     @GetMapping({"/viewUserUnReturned"})
     public String viewUserUnReturned(@RequestParam String username, Model model, HttpSession session) {
-        if (session.getAttribute("IS_MANAGER") != null && session.getAttribute("IS_MANAGER").equals(true)) {
-            if (!this.rechargeFlag) {
-                session.removeAttribute("recharge");
-            }
+        if (!this.rechargeFlag) {
+            session.removeAttribute("recharge");
+        }
 
-            this.rechargeFlag = false;
-            Reader reader = this.userService.selectOneById(username);
-            if (reader == null) {
-                return "managerTemplates/userManager";
-            } else {
-                ArrayList<LogBean> logBeans = this.borrowReturnService.selectUnReturnedOne(username);
-                model.addAttribute("user", reader);
-                model.addAttribute("allLogs", logBeans);
-                model.addAttribute("all", "false");
-                return "managerTemplates/viewUser";
-            }
+        this.rechargeFlag = false;
+        Reader reader = this.userService.selectOneById(username);
+        if (reader == null) {
+            return "managerTemplates/userManager";
         } else {
-            return "redirect:/login";
+            ArrayList<LogBean> logBeans = this.borrowReturnService.selectUnReturnedOne(username);
+            model.addAttribute("user", reader);
+            model.addAttribute("allLogs", logBeans);
+            model.addAttribute("all", "false");
+            return "managerTemplates/viewUser";
         }
     }
 

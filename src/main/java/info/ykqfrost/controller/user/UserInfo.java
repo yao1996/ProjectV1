@@ -14,9 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class UserInfo {
     private BorrowReturnService borrowReturnService;
 
-    public UserInfo() {
-    }
-
     @Autowired
     public void setBorrowReturnService(BorrowReturnService borrowReturnService) {
         this.borrowReturnService = borrowReturnService;

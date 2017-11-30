@@ -7,10 +7,12 @@ import info.ykqfrost.beans.BookDetails;
 import info.ykqfrost.service.BookService;
 import info.ykqfrost.service.ManagerService;
 import info.ykqfrost.utils.Douban;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,11 +28,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class AddBook {
     private BookService bookService;
     private ManagerService managerService;
-    private static final String ISMANAGER = "IS_MANAGER";
     private boolean bookAddMessage;
-
-    public AddBook() {
-    }
 
     @Autowired
     public void setManagerService(ManagerService managerService) {
@@ -44,17 +42,12 @@ public class AddBook {
 
     @GetMapping({"/addBook"})
     public String addBook(HttpSession session, Model model) {
-        if (session.getAttribute("IS_MANAGER") != null && session.getAttribute("IS_MANAGER").equals(true)) {
-            if (!this.bookAddMessage) {
-                session.removeAttribute("bookAddMessage");
-            }
-
-            this.bookAddMessage = false;
-            model.addAttribute("book", new BookDetails());
-            return "managerTemplates/addBooks";
-        } else {
-            return "redirect:/login";
+        if (!this.bookAddMessage) {
+            session.removeAttribute("bookAddMessage");
         }
+        this.bookAddMessage = false;
+        model.addAttribute("book", new BookDetails());
+        return "managerTemplates/addBooks";
     }
 
     @PostMapping({"/addBook"})
@@ -87,7 +80,6 @@ public class AddBook {
         long isbn13 = Long.parseLong(isbn);
         AddBookForm addBookForm = new AddBookForm();
         addBookForm.setIsbn(isbn13);
-
         try {
             BookDetails bookDetails = Douban.getBookDetail(addBookForm);
             Ajax ajax = new Ajax();
